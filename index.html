@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur des activités interactives</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        
+        /* Toast animation */
+        .toast-enter {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast-leave {
+            transform: translateY(150%);
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col relative pb-20">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg text-white py-12 px-6 mb-10">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">Générateur des Activités Interactives</h1>
+            <p class="text-indigo-100 text-lg md:text-xl font-medium max-w-2xl mx-auto">
+                Accédez facilement aux prompts et aux codes sources pour générer vos nouvelles activités pédagogiques en un seul clic.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 w-full max-w-5xl mx-auto px-6 grid gap-8">
+
+        <!-- Card 1 : QCM-Bloom -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 hover:shadow-md transition-shadow duration-300">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-blue-100 text-blue-700 p-2 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-800">QCM - Bloom</h2>
+                </div>
+                <p class="text-slate-500">Générateur de questions à choix multiples basé sur la taxonomie de Bloom.</p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row w-full md:w-auto gap-3">
+                <button onclick="copyCombinedContent('prompt-qcm', 'code-qcm', 'QCM-Bloom')" class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-xl shadow-sm hover:shadow transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    Copier Prompt & Code
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 2 : Feuille de travail -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 hover:shadow-md transition-shadow duration-300">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-purple-100 text-purple-700 p-2 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-800">Feuille de travail</h2>
+                </div>
+                <p class="text-slate-500">Interface d'exercices variés (textes à trous, QCM, associations).</p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row w-full md:w-auto gap-3">
+                <button onclick="copyCombinedContent('prompt-feuille', 'code-feuille', 'Feuille de travail')" class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 px-6 rounded-xl shadow-sm hover:shadow transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    Copier Prompt & Code
+                </button>
+            </div>
+        </div>
+
+        <!-- Card 3 : Question / Réponse -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 hover:shadow-md transition-shadow duration-300">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-amber-100 text-amber-700 p-2 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </span>
+                    <h2 class="text-2xl font-bold text-slate-800">Question / Réponse</h2>
+                </div>
+                <p class="text-slate-500">Activité interactive d'accordéon pour structurer les cours et concepts.</p>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row w-full md:w-auto gap-3">
+                <button onclick="copyCombinedContent('prompt-qr', 'code-qr', 'Question / Réponse')" class="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-2.5 px-6 rounded-xl shadow-sm hover:shadow transition-all duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    Copier Prompt & Code
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 flex items-center gap-3 bg-slate-900 text-white px-5 py-4 rounded-xl shadow-2xl transition-all duration-300 toast-leave z-50">
+        <div class="bg-green-500 rounded-full p-1">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+        <p id="toast-message" class="font-medium">Copié avec succès !</p>
+    </div>
+
+    <!-- ================= DATA STORAGE (Hidden Textareas) ================= -->
+    
+    <!-- 1. QCM-Bloom -->
+    <textarea id="prompt-qcm" class="hidden">
+Lisez ce code en profondeur, puis créez-moi une version exactement semblable, mais appliquée au sujet présenté dans le document PDF joint.
+
+Respectez strictement les consignes suivantes :
+
+Créer strictement suivant le modèle (Code HTML).
+Il ne faut pas faire référence au cours, par exemple en disant « selon le cours ».
+Les phrases doivent être courtes.
+Les questions et les choix de réponse doivent comporter une ou deux phrases au maximum.
+Les phrases doivent être simples et faciles à comprendre.
+Les questions doivent suivre la progression de la taxonomie de Bloom ; indiquez avant chaque question le niveau correspondant : connaissance, compréhension, application, analyse, évaluation ou création.
+Les choix de réponse doivent apparaître dans un ordre différent à chaque ouverture de la page web.
+Créer toujours 10 questions avec 4 choix pour chacune.
+    </textarea>
+
+    <textarea id="code-qcm" class="hidden">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Défi : Situations Cliniques (3AC)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .option-btn {
+            background-color: #f3f4f6;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #e5e7eb;
+        }
+
+        .option-btn.correct {
+            background-color: #dcfce7 !important; /* green-100 */
+            border: 1px solid #22c55e !important; /* green-500 */
+            color: #166534;
+        }
+
+        .option-btn.incorrect {
+            background-color: #fee2e2 !important; /* red-100 */
+            border: 1px solid #ef4444 !important; /* red-500 */
+            color: #991b1b;
+        }
+
+        .progress-segment {
+            height: 4px;
+            border-radius: 4px;
+            flex: 1;
+            transition: background-color 0.3s ease;
+        }
+        
+        .progress-active {
+            background-color: #1a56db;
+        }
+        
+        .progress-inactive {
+            background-color: #e5e7eb;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50">
+
+    <!-- ================= ECRAN D'ACCUEIL ================= -->
+    <div id="intro-screen" class="min-h-screen flex flex-col items-center justify-center p-6 text-center fade-in">
+        <div class="max-w-2xl w-full p-8 sm:p-12">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-[#1a56db] mb-6 leading-tight">Les Microorganismes <br><span class="text-gray-900">et l'immunologie</span></h1>
+            
+            <div class="bg-blue-50 text-blue-900 rounded-2xl p-5 mb-8 text-left border border-blue-100">
+                <p class="font-bold text-[0.95rem] mb-2 flex items-center"><span class="text-lg mr-2">🧬</span> Matière : <span class="font-medium ml-2 text-gray-700">Sciences de la Vie et de la Terre (SVT)</span></p>
+                <p class="font-bold text-[0.95rem] mb-2 flex items-center"><span class="text-lg mr-2">📖</span> Chapitre : <span class="font-medium ml-2 text-gray-700">Les réponses immunitaires non spécifiques</span></p>
+                <p class="font-bold text-[0.95rem] flex items-center"><span class="text-lg mr-2">🎓</span> Niveau : <span class="font-medium ml-2 text-gray-700">3ème Année Collège (3AC)</span></p>
+            </div>
+
+            <div class="text-left mb-8">
+                <h2 class="text-lg font-bold text-gray-800 mb-3 flex items-center"><span class="text-xl mr-2">📌</span> Instructions :</h2>
+                <ul class="text-gray-600 list-none space-y-3 text-[0.95rem]">
+                    <li class="flex items-start"><span class="text-[#1a56db] mr-2 font-bold">•</span> Lisez attentivement chaque situation clinique.</li>
+                    <li class="flex items-start"><span class="text-[#1a56db] mr-2 font-bold">•</span> Les propositions se ressemblent beaucoup, cherchez le mot clé qui fait la différence !</li>
+                    <li class="flex items-start"><span class="text-[#1a56db] mr-2 font-bold">•</span> Vous pouvez utiliser l'indice si vous êtes bloqué.</li>
+                    <li class="flex items-start"><span class="text-[#1a56db] mr-2 font-bold">•</span> Découvrez vos conseils personnalisés à la fin du test.</li>
+                </ul>
+            </div>
+
+            <button onclick="startQuiz()" class="w-full sm:w-2/3 mx-auto block bg-[#1a56db] text-white font-semibold text-lg py-4 rounded-full hover:bg-blue-700 transition-all focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                Commencer le défi
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= ECRAN DU QUIZ ================= -->
+    <div id="quiz-screen" class="hidden min-h-screen flex-col justify-between bg-white fade-in">
+        <!-- Header / Progress Bar -->
+        <header class="w-full max-w-4xl mx-auto px-6 pt-6 pb-4">
+            <div class="flex items-center justify-between">
+                <!-- Progress Bars -->
+                <div id="progress-container" class="flex flex-1 space-x-1.5 mr-6">
+                    <!-- Segments will be generated by JS -->
+                </div>
+                
+                <!-- Question Counter -->
+                <div class="text-sm font-medium text-gray-500 mr-6" id="question-counter">
+                    1/10
+                </div>
+
+                <!-- Score Badges -->
+                <div class="flex space-x-2">
+                    <!-- Incorrect Badge -->
+                    <div class="flex items-center px-2 py-1 bg-red-100 text-red-500 rounded-full text-xs font-bold">
+                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        <span id="score-incorrect">0</span>
+                    </div>
+                    <!-- Correct Badge -->
+                    <div class="flex items-center px-2 py-1 bg-green-100 text-green-500 rounded-full text-xs font-bold">
+                        <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                        <span id="score-correct">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 w-full max-w-4xl mx-auto px-6 flex flex-col pt-8">
+            
+            <!-- Question Text -->
+            <div class="flex mb-8 text-[1.1rem] font-medium leading-relaxed text-gray-900">
+                <span id="q-number" class="mr-2 font-bold text-[#1a56db]">1.</span>
+                <span id="q-text">Chargement de la question...</span>
+            </div>
+
+            <!-- Options Container -->
+            <div id="options-container" class="space-y-4 mb-8">
+                <!-- Options will be injected here -->
+            </div>
+
+            <!-- Hint Section -->
+            <div>
+                <button onclick="toggleHint()" class="flex items-center text-[0.95rem] font-medium text-gray-700 hover:text-[#1a56db] transition-colors focus:outline-none bg-gray-50 px-4 py-2 rounded-full border border-gray-200 hover:border-blue-200">
+                    💡 Voir l'indice
+                    <svg id="hint-chevron" class="w-4 h-4 ml-1.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div id="hint-content" class="hidden mt-3 p-4 bg-yellow-50 border border-yellow-100 rounded-xl text-sm text-yellow-800 font-medium"></div>
+                
+                <!-- Rationale (Explication) after answering -->
+                <div id="rationale-content" class="hidden mt-4 p-4 rounded-xl text-sm font-medium leading-relaxed"></div>
+            </div>
+
+        </main>
+
+        <!-- Footer / Next Button -->
+        <footer class="w-full max-w-4xl mx-auto px-6 pb-8 pt-4">
+            <button id="next-btn" onclick="nextQuestion()" class="w-full bg-[#1a56db] text-white font-semibold py-4 rounded-full hover:bg-blue-700 transition focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-md">
+                Suivant
+            </button>
+        </footer>
+    </div>
+
+    <!-- ================= ECRAN DES RESULTATS ================= -->
+    <div id="result-screen" class="hidden min-h-screen flex-col items-center justify-center p-6 text-center fade-in">
+        <div class="max-w-2xl w-full bg-white rounded-3xl shadow-sm border border-gray-200 p-8 sm:p-12">
+            <h2 class="text-3xl font-extrabold text-gray-900 mb-2">Défi Terminé !</h2>
+            
+            <div class="text-7xl mb-6 mt-4 drop-shadow-md" id="result-emoji">🏆</div>
+            
+            <p class="text-lg text-gray-600 font-medium mb-6">Votre score final :</p>
+            <div class="text-5xl font-extrabold text-[#1a56db] mb-8 bg-blue-50 py-4 rounded-2xl border border-blue-100"><span id="final-score">0</span><span class="text-3xl text-gray-400">/10</span></div>
+            
+            <div class="text-left mb-8">
+                <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Recommandations du professeur :</h3>
+                <div id="feedback-message" class="p-5 rounded-2xl text-[0.95rem] font-medium leading-relaxed">
+                    <!-- Feedback injected via JS -->
+                </div>
+            </div>
+
+            <button onclick="location.reload()" class="w-full sm:w-2/3 mx-auto block bg-[#1a56db] text-white font-semibold text-lg py-4 rounded-full hover:bg-blue-700 transition-all focus:outline-none focus:ring-4 focus:ring-blue-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                🔄 Rejouer le défi
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "(Connaissance) Ahmed transpire beaucoup. Le professeur explique que la sueur est une barrière naturelle. Quelle est la propriété exacte de cette barrière ?",
+                options: [
+                    { text: "Elle empêche l'entrée des microbes grâce à son acidité chimique.", correct: true, rationale: "Exact ! La sueur contient une acidité (pH=3,5) qui détruit les microbes. C'est une barrière chimique." },
+                    { text: "Elle empêche l'entrée des microbes grâce à sa paroi physique.", correct: false, rationale: "Attention : la sueur est un liquide, ce n'est pas un mur ou une paroi physique comme la peau." },
+                    { text: "Elle empêche l'entrée des microbes grâce à sa flore écologique.", correct: false, rationale: "Attention : la flore écologique se trouve dans l'intestin, pas dans la sueur." }
+                ],
+                hint: "Pensez à ce que contient la sueur : est-ce un liquide acide ou un simple mur ?"
+            },
+            {
+                question: "(Compréhension) Après une piqûre, Sara observe un gonflement (un œdème) au niveau de sa peau. Quelle est l'origine exacte de ce symptôme local ?",
+                options: [
+                    { text: "Il est causé par la fuite du plasma sanguin vers le lieu de l'infection.", correct: true, rationale: "Parfait ! Le liquide du sang (plasma) sort des vaisseaux et s'accumule sous la peau, créant le gonflement." },
+                    { text: "Il est causé par la fuite des globules rouges vers le lieu de l'infection.", correct: false, rationale: "Attention : ce ne sont pas les globules rouges qui fuient, mais le liquide (le plasma)." },
+                    { text: "Il est causé par la fuite des microbes vers le lieu de l'infection.", correct: false, rationale: "Les microbes entrent par la plaie, ils ne \"fuient\" pas des vaisseaux sanguins." }
+                ],
+                hint: "Quel liquide sort du vaisseau sanguin pour s'accumuler sous la peau et créer du volume ?"
+            },
+            {
+                question: "(Application) Le médecin observe une plaie rouge et chaude. Quel mécanisme vasculaire explique exactement ces deux signes de l'inflammation ?",
+                options: [
+                    { text: "C'est la dilatation des vaisseaux sanguins qui augmente l'afflux de sang.", correct: true, rationale: "Bravo ! L'élargissement (dilatation) des vaisseaux laisse passer plus de sang, qui est naturellement rouge et chaud." },
+                    { text: "C'est la contraction des vaisseaux sanguins qui augmente l'afflux de sang.", correct: false, rationale: "Si le vaisseau se contracte (devient plus petit), le sang passera moins, pas plus." },
+                    { text: "C'est la dilatation des vaisseaux sanguins qui diminue l'afflux de sang.", correct: false, rationale: "La dilatation (l'élargissement) augmente la quantité de sang, elle ne la diminue pas." }
+                ],
+                hint: "Lisez attentivement : le vaisseau doit-il s'élargir (se dilater) ou rétrécir pour laisser passer plus de sang ?"
+            },
+            {
+                question: "(Application) Dans une plaie, les globules blancs doivent quitter le sang pour attaquer les microbes. Comment ces cellules de défense réussissent-elles à sortir des capillaires sanguins ?",
+                options: [
+                    { text: "Les globules blancs se déforment pour traverser la paroi des capillaires.", correct: true, rationale: "C'est exact ! Cette capacité incroyable à se déformer pour passer à travers les parois s'appelle la diapédèse." },
+                    { text: "Les globules blancs détruisent la paroi des capillaires pour créer un passage.", correct: false, rationale: "S'ils détruisaient le vaisseau, cela provoquerait un saignement. Ils passent à travers sans rien casser." },
+                    { text: "Les globules blancs utilisent les terminaisons nerveuses pour sortir des capillaires.", correct: false, rationale: "Les terminaisons nerveuses servent à ressentir la douleur, elles ne sont pas des portes de sortie pour les cellules." }
+                ],
+                hint: "Pensez au mot \"Diapédèse\". Est-ce que la cellule change sa forme ou casse le vaisseau ?"
+            },
+            {
+                question: "(Analyse) Au laboratoire, on observe un phagocyte qui élimine un microbe. Quel est le rôle exact des éléments internes de ce phagocyte ?",
+                options: [
+                    { text: "La membrane cytoplasmique ingère le microbe, puis le lysosome le digère.", correct: true, rationale: "C'est l'ordre et le rôle parfaits ! La membrane capture (ingestion), et le lysosome détruit (digestion)." },
+                    { text: "Le lysosome ingère le microbe, puis la membrane cytoplasmique le digère.", correct: false, rationale: "Les rôles sont inversés ! Le lysosome est à l'intérieur pour digérer, la membrane est à l'extérieur pour ingérer." },
+                    { text: "La membrane cytoplasmique ingère le microbe, puis le noyau le digère.", correct: false, rationale: "Le noyau contient les informations de la cellule, mais il n'a aucun rôle dans la digestion." }
+                ],
+                hint: "Qui attrape le microbe de l'extérieur ? Et qui libère les enzymes à l'intérieur pour le détruire ?"
+            },
+            {
+                question: "(Évaluation) Une maladie empêche la membrane du globule blanc de se déformer (pas de pseudopodes). Quelle étape de la phagocytose sera bloquée en premier ?",
+                options: [
+                    { text: "La cellule pourra faire l'adhésion, mais l'ingestion sera bloquée.", correct: true, rationale: "Excellent ! Sans la déformation de la membrane, le phagocyte peut toucher le microbe (adhésion) mais ne peut pas l'avaler (ingestion)." },
+                    { text: "La cellule pourra faire l'ingestion, mais la digestion sera bloquée.", correct: false, rationale: "L'ingestion nécessite de déformer la membrane. Donc cette étape ne pourra même pas avoir lieu." },
+                    { text: "La cellule pourra faire la digestion, mais le rejet sera bloqué.", correct: false, rationale: "Si l'ingestion est bloquée, les étapes suivantes (digestion et rejet) sont automatiquement bloquées aussi." }
+                ],
+                hint: "Pour \"avaler\" le microbe, la membrane doit bouger. Si elle ne bouge pas, quelle étape devient impossible ?"
+            },
+            {
+                question: "(Synthèse) Un élève veut classer les étapes de l'action du phagocyte (la phagocytose). Quel est l'ordre chronologique exact ?",
+                options: [
+                    { text: "L'ordre exact est : l'adhésion, l'ingestion, la digestion, puis le rejet des déchets.", correct: true, rationale: "Parfait ! On s'accroche (adhésion), on avale (ingestion), on détruit (digestion), on rejette." },
+                    { text: "L'ordre exact est : l'adhésion, la digestion, l'ingestion, puis le rejet des déchets.", correct: false, rationale: "La digestion (destruction interne) ne peut pas se faire avant d'avoir fait entrer le microbe (ingestion)." },
+                    { text: "L'ordre exact est : l'ingestion, l'adhésion, la digestion, puis le rejet des déchets.", correct: false, rationale: "La cellule ne peut pas avaler (ingérer) le microbe avant de s'y être attachée (adhésion)." }
+                ],
+                hint: "C'est comme manger : on attrape avec la main, on met dans la bouche, on digère dans l'estomac, et on rejette."
+            },
+            {
+                question: "(Évaluation) Quand un microbe pénètre dans le corps, la phagocytose se déclenche. Quelle est la justification exacte pour appeler cette réponse « non spécifique » ?",
+                options: [
+                    { text: "Parce que les phagocytes éliminent toutes les molécules étrangères à l'organisme sans distinction.", correct: true, rationale: "C'est la phrase de votre cours ! \"Sans distinction\" signifie que le phagocyte attaque n'importe quel microbe de la même façon." },
+                    { text: "Parce que les phagocytes empêchent l'entrée de toutes les molécules étrangères à l'organisme sans distinction.", correct: false, rationale: "Piège ! \"Empêcher l'entrée\", c'est le rôle des barrières naturelles (peau), pas de la phagocytose." },
+                    { text: "Parce que les phagocytes signalent la présence de toutes les molécules étrangères à l'organisme sans distinction.", correct: false, rationale: "Piège ! \"Signaler la présence\", c'est le rôle de l'inflammation, pas l'action principale de la phagocytose." }
+                ],
+                hint: "Quel est le rôle final du phagocyte : bloquer l'entrée, alerter, ou éliminer le microbe ?"
+            },
+            {
+                question: "(Création / Déduction) Karim est tombé et sa peau est blessée. Quel est l'enchaînement exact des mécanismes de défense qui s'activent dans son corps ?",
+                options: [
+                    { text: "La lésion déclenche une inflammation, suivie de la diapédèse des cellules, et enfin la phagocytose.", correct: true, rationale: "Raisonnement parfait : 1) Alarme (inflammation), 2) les globules sortent du sang (diapédèse), 3) ils attaquent (phagocytose)." },
+                    { text: "La lésion déclenche une diapédèse des cellules, suivie de l'inflammation, et enfin la phagocytose.", correct: false, rationale: "L'inflammation (le signal d'alarme) doit avoir lieu AVANT que les cellules ne sortent des vaisseaux (la diapédèse)." },
+                    { text: "La lésion déclenche une inflammation, suivie de la phagocytose, et enfin la diapédèse des cellules.", correct: false, rationale: "Les globules blancs doivent sortir du sang (diapédèse) AVANT de pouvoir combattre (phagocytose)." }
+                ],
+                hint: "L'alarme sonne d'abord, les cellules sortent du sang, puis elles attaquent."
+            },
+            {
+                question: "(Création / Conclusion) Le professeur demande d'écrire une conclusion parfaite. Laquelle de ces phrases utilise chaque terme scientifique à sa place exacte ?",
+                options: [
+                    { text: "La barrière physique est franchie, l'inflammation attire les cellules immunitaires, puis la phagocytose élimine les microbes.", correct: true, rationale: "C'est le résumé parfait de la leçon ! Chaque mécanisme est relié à son action exacte." },
+                    { text: "La barrière physique est franchie, la phagocytose attire les cellules immunitaires, puis l'inflammation élimine les microbes.", correct: false, rationale: "Les mots sont inversés : c'est l'inflammation qui attire les cellules, et c'est la phagocytose qui élimine." },
+                    { text: "La barrière chimique est franchie, l'inflammation attire les cellules immunitaires, puis la phagocytose élimine les microbes.", correct: false, rationale: "Dans le cas d'une épine (une lésion), c'est la peau qui est traversée. La peau est une barrière PHYSIQUE, pas chimique." }
+                ],
+                hint: "Lisez très lentement : associez la barrière à sa bonne nature, et chaque réaction à son rôle précis."
+            }
+        ];
+
+        let currentIndex = 0;
+        let scoreCorrect = 0;
+        let scoreIncorrect = 0;
+        let hasAnswered = false;
+
+        const alphabet = ["A.", "B.", "C."];
+
+        // Init Progress Bar
+        const progressContainer = document.getElementById('progress-container');
+        for (let i = 0; i < quizData.length; i++) {
+            const segment = document.createElement('div');
+            segment.className = `progress-segment ${i === 0 ? 'progress-active' : 'progress-inactive'}`;
+            segment.id = `segment-${i}`;
+            progressContainer.appendChild(segment);
+        }
+
+        function startQuiz() {
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('intro-screen').classList.remove('flex');
+            
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            document.getElementById('quiz-screen').classList.add('flex');
+            
+            loadQuestion(currentIndex);
+        }
+
+        function loadQuestion(index) {
+            hasAnswered = false;
+            const q = quizData[index];
+            
+            // Update Headers
+            document.getElementById('question-counter').innerText = `${index + 1}/10`;
+            document.getElementById('q-number').innerText = `${index + 1}.`;
+            document.getElementById('q-text').innerText = q.question;
+
+            // Update Progress Bar
+            for (let i = 0; i < quizData.length; i++) {
+                const seg = document.getElementById(`segment-${i}`);
+                if (i <= index) {
+                    seg.classList.replace('progress-inactive', 'progress-active');
+                } else {
+                    seg.classList.replace('progress-active', 'progress-inactive');
+                }
+            }
+
+            // Options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            // Randomize options specifically for display (optional, kept logic simple here)
+            let displayOptions = [...q.options];
+            
+            displayOptions.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full flex items-start p-4 mb-3 rounded-xl option-btn text-left focus:outline-none border border-transparent shadow-sm hover:shadow-md';
+                btn.onclick = () => selectOption(btn, opt, displayOptions);
+                
+                btn.innerHTML = `
+                    <span class="mr-3 font-semibold text-gray-800">${alphabet[idx]}</span>
+                    <span class="text-gray-800 font-medium leading-relaxed">${opt.text}</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            // Reset Hint & Rationale
+            document.getElementById('hint-content').classList.add('hidden');
+            document.getElementById('hint-content').innerText = q.hint;
+            document.getElementById('hint-chevron').style.transform = "rotate(0deg)";
+            
+            document.getElementById('rationale-content').classList.add('hidden');
+        }
+
+        function toggleHint() {
+            const hint = document.getElementById('hint-content');
+            const chevron = document.getElementById('hint-chevron');
+            if (hint.classList.contains('hidden')) {
+                hint.classList.remove('hidden');
+                chevron.style.transform = "rotate(180deg)";
+            } else {
+                hint.classList.add('hidden');
+                chevron.style.transform = "rotate(0deg)";
+            }
+        }
+
+        function selectOption(selectedBtn, selectedOpt, allOptions) {
+            if (hasAnswered) return;
+            hasAnswered = true;
+
+            const buttons = document.getElementById('options-container').children;
+
+            // Apply styling
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                buttons[i].style.cursor = "default";
+                buttons[i].classList.remove('hover:shadow-md');
+                
+                if (allOptions[i].correct) {
+                    buttons[i].classList.add('correct');
+                } else if (buttons[i] === selectedBtn && !selectedOpt.correct) {
+                    buttons[i].classList.add('incorrect');
+                } else {
+                    buttons[i].style.opacity = "0.4";
+                }
+            }
+
+            // Update Score
+            if (selectedOpt.correct) {
+                scoreCorrect++;
+                document.getElementById('score-correct').innerText = scoreCorrect;
+            } else {
+                scoreIncorrect++;
+                document.getElementById('score-incorrect').innerText = scoreIncorrect;
+            }
+
+            // Show Rationale
+            const rationaleDiv = document.getElementById('rationale-content');
+            rationaleDiv.innerHTML = `<strong>Explication :</strong> ${selectedOpt.rationale}`;
+            rationaleDiv.classList.remove('hidden');
+            
+            if (selectedOpt.correct) {
+                rationaleDiv.classList.add('bg-green-50', 'text-green-800', 'border', 'border-green-200');
+                rationaleDiv.classList.remove('bg-red-50', 'text-red-800', 'border-red-200');
+            } else {
+                rationaleDiv.classList.add('bg-red-50', 'text-red-800', 'border', 'border-red-200');
+                rationaleDiv.classList.remove('bg-green-50', 'text-green-800', 'border-green-200');
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('flex');
+            
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('result-screen').classList.add('flex');
+
+            document.getElementById('final-score').innerText = scoreCorrect;
+
+            // Logic for feedback based on score
+            const feedbackDiv = document.getElementById('feedback-message');
+            const emojiDiv = document.getElementById('result-emoji');
+            
+            if (scoreCorrect >= 8) {
+                emojiDiv.innerText = "🌟";
+                feedbackDiv.className = "p-5 rounded-2xl text-[0.95rem] font-medium leading-relaxed bg-green-50 text-green-800 border border-green-200";
+                feedbackDiv.innerHTML = "<strong>Excellent travail !</strong> Vous maîtrisez parfaitement les mécanismes de l'immunité naturelle. Vous faites bien la différence entre les barrières, l'inflammation et la phagocytose. Vous êtes prêt pour la suite du cours !";
+            } else if (scoreCorrect >= 5) {
+                emojiDiv.innerText = "👍";
+                feedbackDiv.className = "p-5 rounded-2xl text-[0.95rem] font-medium leading-relaxed bg-yellow-50 text-yellow-800 border border-yellow-200";
+                feedbackDiv.innerHTML = "<strong>Bon travail !</strong> Vous avez compris l'essentiel du cours, mais certains détails vous échappent encore. Une petite révision de votre fiche technique (notamment le rôle précis des cellules et l'ordre de la phagocytose) vous sera très utile.";
+            } else {
+                emojiDiv.innerText = "💪";
+                feedbackDiv.className = "p-5 rounded-2xl text-[0.95rem] font-medium leading-relaxed bg-red-50 text-red-800 border border-red-200";
+                feedbackDiv.innerHTML = "<strong>Ne vous découragez pas !</strong> Ce chapitre nécessite beaucoup de précision et de concentration. Nous vous conseillons de revoir les schémas du cours, de relire attentivement la leçon, puis de refaire ce défi pour vous améliorer.";
+            }
+        }
+
+        function nextQuestion() {
+            if (!hasAnswered) {
+                // If user tries to click next without answering
+                const optionsContainer = document.getElementById('options-container');
+                optionsContainer.classList.add('animate-pulse');
+                setTimeout(() => optionsContainer.classList.remove('animate-pulse'), 500);
+                return;
+            }
+
+            if (currentIndex < quizData.length - 1) {
+                currentIndex++;
+                loadQuestion(currentIndex);
+            } else {
+                showResults();
+            }
+        }
+
+    </script>
+</body>
+</html>
+    </textarea>
+
+    <!-- 2. Feuille de travail -->
+    <textarea id="prompt-feuille" class="hidden">
+Lisez ce code très attentivement et en profondeur, puis créez-en un autre exactement sur le même modèle, mais en l’adaptant au thème traité dans le document PDF joint.
+
+Respectez strictement les consignes suivantes :
+
+Créer strictement suivant le modèle (Code HTML).
+Vous ne devez faire aucune référence au cours, par exemple en écrivant « selon le cours ».
+Les phrases doivent être courtes.
+Les phrases doivent être simples et faciles.
+Vous devez conserver le même nombre d’exercices, le même nombre de questions dans chaque exercice, ainsi que le même nombre de choix pour chaque question lorsqu’il y en a.
+    </textarea>
+
+    <textarea id="code-feuille" class="hidden">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les réponses immunitaires - 3 APIC</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+        :root {
+            /* NOUVEAU Thème : Violet / Mauve (SVT / Microbio) */
+            --primary-color: #6c3483; /* Violet foncé */
+            --secondary-color: #af7ac5; /* Violet clair */
+            --background-color: #f5eef8; /* Fond lavande très pâle */
+            --card-background: #ffffff;
+            --text-color: #2c3e50;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 25px rgba(108, 52, 131, 0.15); /* Ombre teintée violet */
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .page { display: none; }
+        .active-page { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .page-content {
+            background-color: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 30px 40px;
+            box-shadow: var(--box-shadow);
+            border-top: 5px solid var(--secondary-color);
+        }
+        
+        #welcome-page .page-content { text-align: center; }
+        #welcome-page svg { margin-bottom: 15px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+        #welcome-page .school-info { font-size: 1.1em; color: var(--primary-color); font-weight: 600; }
+        #welcome-page .main-title { font-size: 2.2em; font-weight: 700; color: var(--primary-color); margin: 10px 0; line-height: 1.2; text-transform: uppercase; }
+        #welcome-page .subtitle { font-size: 1.3em; color: #884ea0; margin-bottom: 10px; font-weight: 600; }
+        #welcome-page .level { font-size: 1.5em; font-weight: 700; color: var(--secondary-color); margin-top: 5px; }
+        #welcome-page .welcome-instructions { margin: 25px auto; max-width: 600px; color: #555; }
+
+        .exercise-title { font-size: 1.5em; font-weight: 700; color: var(--primary-color); margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .instructions { color: #555; margin-bottom: 20px; font-style: italic; background: #f4ecf7; padding: 10px; border-left: 3px solid var(--secondary-color); border-radius: 4px; }
+        
+        .navigation-controls { display: flex; justify-content: space-between; margin-top: 30px; }
+
+        button {
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            color: white; border: none; padding: 12px 25px; font-size: 1em;
+            font-family: 'Montserrat', sans-serif; font-weight: 600; border-radius: 50px;
+            cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 52, 131, 0.4);
+        }
+        button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(108, 52, 131, 0.5); }
+        button.prev-btn { background: #95a5a6; box-shadow: 0 4px 15px rgba(149, 165, 166, 0.4); }
+        button.prev-btn:hover:not(:disabled) { background: #7f8c8d; }
+        button:disabled { background: #bdc3c7; cursor: not-allowed; transform: none; box-shadow: none; opacity: 0.7; }
+        
+        .exercise-actions { display: flex; align-items: center; gap: 15px; margin-top: 25px; flex-wrap: wrap; }
+        .feedback { font-weight: 600; padding: 10px 15px; border-radius: 6px; flex-grow: 1; text-align: center; }
+
+        /* Styles exercices */
+        .fill-blank { border: none; border-bottom: 2px dashed var(--secondary-color); background: #fafafa; padding: 5px 10px; font-size: 1em; margin: 5px; width: 180px; text-align: center; color: var(--primary-color); font-weight: 600; border-radius: 4px; transition: 0.3s;}
+        .fill-blank:focus { outline: none; background: #fff; border-bottom-style: solid; }
+        .fill-blank.correct { border-bottom: 2px solid var(--correct-color); background-color: #e8f8f5; } 
+        .fill-blank.incorrect { border-bottom: 2px solid var(--incorrect-color); background-color: #fdedec; }
+        
+        .association-item { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; border-bottom: 1px solid #f0f0f0; padding-bottom: 12px;}
+        .association-item strong { width: 180px; color: #444; }
+        select { padding: 10px; border-radius: 6px; border: 1px solid #ccc; background-color: white; flex-grow: 1; cursor: pointer; font-family: inherit;}
+        
+        .tf-option { margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px; border-radius: 8px; border: 1px solid #eee; background-color: #fff; transition: 0.2s; }
+        .tf-option:hover { background-color: #fafafa; }
+        .tf-option > span { flex: 1; font-weight: 500; }
+        .tf-option div { display: flex; gap: 15px; min-width: 130px; }
+        .tf-option label { cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        
+        .qcm-question { margin-bottom: 20px; background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #eee; } 
+        .qcm-question strong { display: block; margin-bottom: 10px; font-size: 1.05em; color: var(--primary-color); }
+        .qcm-option label { display: flex; align-items: center; gap: 10px; background-color: #f9f9f9; border: 1px solid #e0e0e0; padding: 10px 15px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; margin-bottom: 6px; }
+        .qcm-option label:hover { background-color: #f0f0f0; border-color: #ccc; }
+        .qcm-option input { accent-color: var(--secondary-color); transform: scale(1.2); }
+
+        /* Styles spécifiques pour l'ordre (Ex 5) */
+        .order-container { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .order-list { list-style: none; padding: 0; }
+        .order-list li { background: #fdfdfd; margin: 8px 0; padding: 12px; border-radius: 8px; border: 1px solid #eee; display: flex; align-items: center; gap: 15px; }
+        .letter-badge { background: var(--secondary-color); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+        .order-inputs { display: flex; justify-content: center; gap: 10px; align-items: center; margin-top: 15px; flex-wrap: wrap; }
+        .order-inputs select { max-width: 80px; font-weight: bold; text-align: center; }
+        .arrow { font-size: 1.5em; color: var(--secondary-color); }
+
+        /* Results Page */
+        #results-page .page-content { text-align: center; }
+        #final-score { font-size: 3em; font-weight: 700; color: var(--secondary-color); margin: 10px 0; text-shadow: 2px 2px 0px #eee; }
+        #final-appreciation { font-size: 1.2em; font-style: italic; color: #555; margin-bottom: 20px; }
+        #final-icon { font-size: 5em; margin-bottom: 10px; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-20px);} 60% {transform: translateY(-10px);} }
+        #progress-bar-container { width: 100%; background-color: #e0e0e0; border-radius: 50px; margin: 20px 0; overflow: hidden; }
+        #progress-bar { width: 0%; height: 20px; background: linear-gradient(90deg, var(--secondary-color), var(--correct-color)); border-radius: 50px; transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        @media (max-width: 600px) {
+            .page-content { padding: 20px; }
+            .fill-blank { width: 100%; margin: 5px 0; }
+            .association-item { flex-direction: column; align-items: flex-start; }
+            .association-item select { width: 100%; }
+            .order-list li { font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Page 0: Welcome -->
+        <div id="welcome-page" class="page active-page">
+            <div class="page-content">
+                <!-- NOUVEAU LOGO : Anticorps (forme Y) neutralisant des antigènes (points) -->
+                <svg width="100" height="100" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Anticorps Principal -->
+                    <path d="M12 21V11L5 4M12 11L19 4" stroke="#6c3483" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- Antigènes (Virus/Bactéries) -->
+                    <circle cx="5" cy="4" r="2.5" fill="#af7ac5"/>
+                    <circle cx="19" cy="4" r="2.5" fill="#af7ac5"/>
+                    <circle cx="12" cy="16" r="1.5" fill="#af7ac5" opacity="0.6"/>
+                </svg>
+                
+                <p class="school-info">Sciences de la Vie et de la Terre</p>
+                <h1 class="main-title">Les réponses immunitaires</h1>
+                <p class="subtitle">L'immunité humorale et l'immunité cellulaire</p>
+                <p class="level">Niveau : 3 APIC</p>
+                
+                <div class="welcome-instructions">
+                    <p>Ce test interactif porte sur l'immunité spécifique, les anticorps, les antigènes et les types de lymphocytes.</p>
+                </div>
+                <button id="start-btn">Commencer le test</button>
+            </div>
+        </div>
+
+        <!-- Page 1: Exercice 1 -->
+        <div id="page-1" class="page">
+            <div class="page-content">
+                <h3 class="exercise-title">Exercice 1 : Texte à compléter (2 pts)</h3>
+                <p class="instructions">Complétez le texte en utilisant les termes : <strong>anticorps, lymphocyte B, antigène, immunité humorale</strong>.</p>
+                
+                <p style="line-height: 2.2; font-size: 1.05em;">
+                    "Lorsque l'organisme détecte un <input type="text" id="blank1" class="fill-blank" placeholder="..."> , un <input type="text" id="blank2" class="fill-blank" placeholder="..."> spécifique s'active et se différencie en plasmocyte. Ce dernier sécrète des <input type="text" id="blank3" class="fill-blank" placeholder="..."> qui neutralisent l'agent pathogène. Ce mécanisme appartient à <input type="text" id="blank4" class="fill-blank" placeholder="...">."
+                </p>
+
+                <div class="exercise-actions">
+                    <button onclick="checkExercise1(this)">Vérifier</button>
+                    <div class="feedback" id="feedback1"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 2: Exercice 2 -->
+        <div id="page-2" class="page">
+            <div class="page-content">
+                <h3 class="exercise-title">Exercice 2 : Association (2 pts)</h3>
+                <p class="instructions">Associez chaque terme à sa définition correspondante.</p>
+                
+                <div class="association-item"><strong>1. Lymphocyte Tc :</strong><select id="match1"><option value="">-- Choisir --</option></select></div>
+                <div class="association-item"><strong>2. Antigène :</strong><select id="match2"><option value="">-- Choisir --</option></select></div>
+                <div class="association-item"><strong>3. Immunité humorale :</strong><select id="match3"><option value="">-- Choisir --</option></select></div>
+                <div class="association-item"><strong>4. Lymphocyte B :</strong><select id="match4"><option value="">-- Choisir --</option></select></div>
+
+                <div class="exercise-actions">
+                    <button onclick="checkExercise2(this)">Vérifier</button>
+                    <div class="feedback" id="feedback2"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 3: Exercice 3 -->
+        <div id="page-3" class="page">
+            <div class="page-content">
+                <h3 class="exercise-title">Exercice 3 : Vrai ou Faux (2 pts)</h3>
+                <p class="instructions">Indiquez si les affirmations sont vraies ou fausses.</p>
+                
+                <div class="tf-option" id="tf1-container">
+                    <span>1. Les anticorps sont produits par les lymphocytes Tc.</span>
+                    <div><label><input type="radio" name="tf1" value="V"> Vrai</label><label><input type="radio" name="tf1" value="F"> Faux</label></div>
+                </div>
+                <div class="tf-option" id="tf2-container">
+                    <span>2. L'immunité humorale est assurée par les anticorps.</span>
+                    <div><label><input type="radio" name="tf2" value="V"> Vrai</label><label><input type="radio" name="tf2" value="F"> Faux</label></div>
+                </div>
+                <div class="tf-option" id="tf3-container">
+                    <span>3. L'immunité cellulaire implique la destruction des cellules infectées par les lymphocytes Tc.</span>
+                    <div><label><input type="radio" name="tf3" value="V"> Vrai</label><label><input type="radio" name="tf3" value="F"> Faux</label></div>
+                </div>
+                <div class="tf-option" id="tf4-container">
+                    <span>4. Un antigène est une molécule produite par le corps pour défendre l'organisme.</span>
+                    <div><label><input type="radio" name="tf4" value="V"> Vrai</label><label><input type="radio" name="tf4" value="F"> Faux</label></div>
+                </div>
+
+                <div class="exercise-actions">
+                    <button onclick="checkExercise3(this)">Vérifier</button>
+                    <div class="feedback" id="feedback3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 4: Exercice 4 -->
+        <div id="page-4" class="page">
+            <div class="page-content">
+                 <h3 class="exercise-title">Exercice 4 : QCM (2 pts)</h3>
+                 <p class="instructions">Choisissez la bonne réponse.</p>
+                
+                <div class="qcm-question">
+                    <strong>1. Quel type de cellule est responsable de la production des anticorps ?</strong>
+                    <div class="qcm-options-container">
+                        <div class="qcm-option"><label><input type="radio" name="qcm1" value="a"> <span>Macrophage</span></label></div>
+                        <div class="qcm-option"><label><input type="radio" name="qcm1" value="b"> <span>Lymphocyte B</span></label></div>
+                        <div class="qcm-option"><label><input type="radio" name="qcm1" value="c"> <span>Lymphocyte Tc</span></label></div>
+                    </div>
+                </div>
+
+                <div class="qcm-question">
+                    <strong>2. Quelle est la fonction des anticorps ?</strong>
+                    <div class="qcm-options-container">
+                        <div class="qcm-option"><label><input type="radio" name="qcm2" value="a"> <span>Attaquer les globules blancs</span></label></div>
+                        <div class="qcm-option"><label><input type="radio" name="qcm2" value="b"> <span>Neutraliser les agents infectieux</span></label></div>
+                        <div class="qcm-option"><label><input type="radio" name="qcm2" value="c"> <span>Détruire les cellules infectées</span></label></div>
+                    </div>
+                </div>
+
+                <div class="qcm-question">
+                    <strong>3. Quelle est la première étape de la réponse immunitaire spécifique ?</strong>
+                    <div class="qcm-options-container">
+                        <div class="qcm-option"><label><input type="radio" name="qcm3" value="a"> <span>Reconnaissance de l'antigène</span></label></div>
+                        <div class="qcm-option"><label><input type="radio" name="qcm3" value="b"> <span>Multiplication des lymphocytes</span></label></div>
+                        <div class="qcm-option"><label><input type="radio" name="qcm3" value="c"> <span>Élimination de l'antigène</span></label></div>
+                    </div>
+                </div>
+
+                <div class="qcm-question">
+                    <strong>4. L'immunité cellulaire repose principalement sur :</strong>
+                    <div class="qcm-options-container">
+                        <div class="qcm-option"><label><input type="radio" name="qcm4" value="a"> <span>Les plasmocytes</span></label></div>
+                        <div class="qcm-option"><label><input type="radio" name="qcm4" value="b"> <span>Les macrophages</span></label></div>
+                        <div class="qcm-option"><label><input type="radio" name="qcm4" value="c"> <span>Les lymphocytes Tc</span></label></div>
+                    </div>
+                </div>
+
+                <div class="exercise-actions">
+                    <button onclick="checkExercise4(this)">Vérifier</button>
+                    <div class="feedback" id="feedback4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 5: Exercice 5 (Ordre) -->
+        <div id="page-5" class="page">
+            <div class="page-content">
+                <h3 class="exercise-title">Exercice 5 : Synthèse (2 pts)</h3>
+                <p class="instructions">Mettre en ordre les étapes de la réponse immunitaire spécifique.</p>
+                
+                <ul class="order-list">
+                    <li><div class="letter-badge">A</div> Différenciation des cellules immunitaires</li>
+                    <li><div class="letter-badge">B</div> Multiplication des cellules immunitaires</li>
+                    <li><div class="letter-badge">C</div> Reconnaissance de l'antigène</li>
+                    <li><div class="letter-badge">D</div> Élimination de l'antigène</li>
+                </ul>
+
+                <p style="text-align: center; margin-bottom: 5px; font-weight: bold;">Ordre correct :</p>
+                <div class="order-inputs">
+                    <select id="order1"><option value="">?</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <span class="arrow">→</span>
+                    <select id="order2"><option value="">?</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <span class="arrow">→</span>
+                    <select id="order3"><option value="">?</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                    <span class="arrow">→</span>
+                    <select id="order4"><option value="">?</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
+                </div>
+
+                <div class="exercise-actions">
+                    <button onclick="checkExercise5(this)">Vérifier</button>
+                    <div class="feedback" id="feedback5"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 6: Results -->
+        <div id="results-page" class="page">
+            <div class="page-content">
+                <div id="final-icon"></div>
+                <h2>Ton Résultat Final</h2>
+                <div id="final-score"></div>
+                <div id="progress-bar-container"><div id="progress-bar"></div></div>
+                <p id="final-appreciation"></p>
+                <button onclick="location.reload()">Recommencer le test</button>
+            </div>
+        </div>
+        
+        <!-- Navigation Controls -->
+        <div class="navigation-controls" id="nav-controls" style="display: none;">
+            <button id="prev-btn" class="prev-btn">Précédent</button>
+            <button id="next-btn">Suivant</button>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA & STATE ---
+        const answers = {
+            ex1: { 
+                blank1: "antigene", 
+                blank2: "lymphocyte b", 
+                blank3: "anticorps", 
+                blank4: "immunite humorale" 
+            },
+            ex2: { 
+                match1: "def_d", // Lymphocyte Tc -> Détruit les cellules infectées
+                match2: "def_b", // Antigène -> Molécule étrangère
+                match3: "def_c", // Immunité humorale -> Impliquant les anticorps
+                match4: "def_a"  // Lymphocyte B -> Cellule qui produit anticorps
+            },
+            ex3: { 
+                tf1: "F", // Faux (Ce sont les lymphocytes B/plasmocytes)
+                tf2: "V", // Vrai
+                tf3: "V", // Vrai
+                tf4: "F"  // Faux (C'est un corps étranger)
+            },
+            ex4: { 
+                qcm1: "b", // Lymphocyte B
+                qcm2: "b", // Neutraliser les agents
+                qcm3: "a", // Reconnaissance
+                qcm4: "c"  // Lymphocytes Tc
+            },
+            ex5: ["C", "B", "A", "D"] // Reconnaissance -> Multiplication -> Différenciation -> Élimination
+        };
+
+        const points = { ex1: 2, ex2: 2, ex3: 2, ex4: 2, ex5: 2 };
+        const scores = { ex1: 0, ex2: 0, ex3: 0, ex4: 0, ex5: 0 };
+        const checkedStatus = { ex1: false, ex2: false, ex3: false, ex4: false, ex5: false };
+        let currentPageIndex = 0;
+        
+        // --- DOM Elements ---
+        const pages = document.querySelectorAll('.page');
+        const startBtn = document.getElementById('start-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const navControls = document.getElementById('nav-controls');
+        
+        // --- NAVIGATION ---
+        function showPage(index) {
+            pages.forEach((page, i) => {
+                page.classList.remove('active-page');
+                if (i === index) page.classList.add('active-page');
+            });
+            updateNavControls();
+            window.scrollTo(0, 0);
+        }
+
+        function updateNavControls() {
+            if (currentPageIndex === 0 || currentPageIndex === pages.length - 1) {
+                navControls.style.display = 'none';
+            } else {
+                navControls.style.display = 'flex';
+                const currentEx = `ex${currentPageIndex}`;
+                nextBtn.disabled = !checkedStatus[currentEx];
+            }
+            prevBtn.disabled = currentPageIndex <= 1;
+            nextBtn.textContent = (currentPageIndex === pages.length - 2) ? "Voir les résultats" : "Suivant";
+        }
+
+        startBtn.addEventListener('click', () => { currentPageIndex++; showPage(currentPageIndex); });
+        nextBtn.addEventListener('click', () => { 
+            if (currentPageIndex < pages.length - 1) { 
+                if (currentPageIndex === pages.length - 2) { calculateAndShowResults(); } 
+                currentPageIndex++; 
+                showPage(currentPageIndex); 
+            } 
+        });
+        prevBtn.addEventListener('click', () => { if (currentPageIndex > 1) { currentPageIndex--; showPage(currentPageIndex); } });
+
+        // --- UTILS ---
+        const normalizeText = (text) => text.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, ' '); 
+        
+        function showFeedback(elementId, message, isCorrect) {
+            const feedbackEl = document.getElementById(elementId);
+            feedbackEl.innerHTML = message;
+            feedbackEl.style.backgroundColor = isCorrect ? '#d4edda' : '#f8d7da';
+            feedbackEl.style.color = isCorrect ? '#155724' : '#721c24';
+            feedbackEl.style.border = isCorrect ? '1px solid #c3e6cb' : '1px solid #f5c6cb';
+        }
+
+        // --- CHECKING FUNCTIONS ---
+        function checkExercise1(button) {
+            let score = 0;
+            const inputs = ['blank1', 'blank2', 'blank3', 'blank4'];
+            
+            inputs.forEach(id => {
+                const el = document.getElementById(id);
+                const userVal = normalizeText(el.value);
+                const correctVal = normalizeText(answers.ex1[id]);
+
+                let isCorrect = (userVal === correctVal);
+                
+                if (isCorrect) {
+                    score += 0.5;
+                    el.className = 'fill-blank correct';
+                } else {
+                    el.className = 'fill-blank incorrect';
+                }
+            });
+
+            scores.ex1 = score;
+            checkedStatus.ex1 = true;
+            button.disabled = true;
+            showFeedback('feedback1', `Score : ${score} / ${points.ex1} pts`, score === points.ex1);
+            updateNavControls();
+        }
+
+        function checkExercise2(button) {
+            let score = 0;
+            Object.keys(answers.ex2).forEach(key => {
+                const selectEl = document.getElementById(key);
+                if (selectEl.value === answers.ex2[key]) { 
+                    selectEl.style.borderColor = 'var(--correct-color)'; 
+                    selectEl.style.backgroundColor = '#e8f8f5';
+                    score += 0.5; 
+                } else { 
+                    selectEl.style.borderColor = 'var(--incorrect-color)'; 
+                    selectEl.style.backgroundColor = '#fdedec';
+                }
+            });
+            scores.ex2 = score; checkedStatus.ex2 = true; button.disabled = true;
+            showFeedback('feedback2', `Score : ${score} / ${points.ex2} pts`, score === points.ex2);
+            updateNavControls();
+        }
+
+        function checkExercise3(button) {
+            let score = 0;
+            Object.keys(answers.ex3).forEach(key => {
+                const container = document.getElementById(key + '-container');
+                const checkedRadio = document.querySelector(`input[name="${key}"]:checked`);
+                
+                container.style.backgroundColor = '#fff';
+                
+                if (checkedRadio) {
+                    if (checkedRadio.value === answers.ex3[key]) { 
+                        container.style.backgroundColor = '#d4edda'; 
+                        container.style.borderColor = 'var(--correct-color)';
+                        score += 0.5; 
+                    } else { 
+                        container.style.backgroundColor = '#f8d7da'; 
+                        container.style.borderColor = 'var(--incorrect-color)';
+                    }
+                } else {
+                    container.style.borderColor = 'var(--incorrect-color)';
+                }
+            });
+            scores.ex3 = score; checkedStatus.ex3 = true; button.disabled = true;
+            showFeedback('feedback3', `Score : ${score} / ${points.ex3} pts`, score === points.ex3);
+            updateNavControls();
+        }
+
+        function checkExercise4(button) {
+            let score = 0;
+            Object.keys(answers.ex4).forEach(key => {
+                const checkedRadio = document.querySelector(`input[name="${key}"]:checked`);
+                if (checkedRadio) {
+                    const label = checkedRadio.closest('label');
+                    if (checkedRadio.value === answers.ex4[key]) { 
+                        label.style.backgroundColor = '#d4edda'; 
+                        label.style.borderColor = 'var(--correct-color)'; 
+                        score += 0.5; 
+                    } else { 
+                        label.style.backgroundColor = '#f8d7da'; 
+                        label.style.borderColor = 'var(--incorrect-color)'; 
+                    }
+                }
+            });
+            scores.ex4 = score; checkedStatus.ex4 = true; button.disabled = true;
+            showFeedback('feedback4', `Score : ${score} / ${points.ex4} pts`, score === points.ex4);
+            updateNavControls();
+        }
+
+        function checkExercise5(button) {
+            const userOrder = [
+                document.getElementById('order1').value, 
+                document.getElementById('order2').value, 
+                document.getElementById('order3').value, 
+                document.getElementById('order4').value
+            ];
+            
+            const isCorrect = JSON.stringify(userOrder) === JSON.stringify(answers.ex5);
+            const score = isCorrect ? points.ex5 : 0;
+            
+            for(let i=0; i<4; i++) {
+                let sel = document.getElementById(`order${i+1}`);
+                if(userOrder[i] === answers.ex5[i]) {
+                    sel.style.backgroundColor = '#d4edda';
+                    sel.style.borderColor = 'var(--correct-color)';
+                } else {
+                    sel.style.backgroundColor = '#f8d7da';
+                    sel.style.borderColor = 'var(--incorrect-color)';
+                }
+            }
+
+            scores.ex5 = score; checkedStatus.ex5 = true; button.disabled = true;
+            
+            let msg = isCorrect ? "Bravo ! L'ordre est correct." : "L'ordre correct est : C (Reconnaissance) → B (Multiplication) → A (Différenciation) → D (Élimination).";
+            showFeedback('feedback5', `Score : ${score} / ${points.ex5} pts. ${!isCorrect ? '<br><small>' + msg + '</small>' : ''}`, isCorrect);
+            updateNavControls();
+        }
+
+        // --- RESULTS PAGE ---
+        function calculateAndShowResults() {
+            const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+            const totalPoints = Object.values(points).reduce((sum, p) => sum + p, 0);
+            const percentage = totalPoints > 0 ? (totalScore / totalPoints) * 100 : 0;
+            let appreciation = '', icon = '';
+            
+            if (percentage >= 90) { icon = '🛡️'; appreciation = "Excellent ! Tu es un expert en immunologie."; } 
+            else if (percentage >= 70) { icon = '🩺'; appreciation = "Très bon travail ! Tu maîtrises bien les défenses du corps."; } 
+            else if (percentage >= 50) { icon = '🦠'; appreciation = "Pas mal, mais revois certaines définitions."; } 
+            else { icon = '📖'; appreciation = "Relis ton cours sur l'immunité et réessaie !"; }
+            
+            document.getElementById('final-icon').innerText = icon;
+            document.getElementById('final-score').innerText = `${totalScore.toFixed(1)} / ${totalPoints}`;
+            document.getElementById('final-appreciation').innerText = appreciation;
+            setTimeout(() => { document.getElementById('progress-bar').style.width = `${percentage}%`; }, 100);
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Ex2: Mélanger les définitions
+            const populateAndShuffleAssociationOptions = () => {
+                const definitions = [
+                    { value: 'def_a', text: 'a) Cellule immunitaire qui produit des anticorps' },
+                    { value: 'def_b', text: 'b) Molécule étrangère déclenchant une réponse immunitaire' },
+                    { value: 'def_c', text: 'c) Immunité impliquant les anticorps dans le plasma' },
+                    { value: 'def_d', text: 'd) Détruit les cellules infectées par un agent pathogène' }
+                ];
+
+                const selects = document.querySelectorAll('#page-2 .association-item select');
+                selects.forEach(select => {
+                    const shuffledDefinitions = [...definitions].sort(() => Math.random() - 0.5);
+                    shuffledDefinitions.forEach(def => {
+                        const option = document.createElement('option');
+                        option.value = def.value;
+                        option.textContent = def.text;
+                        select.appendChild(option);
+                    });
+                });
+            };
+            populateAndShuffleAssociationOptions();
+            showPage(0);
+        });
+    </script>
+</body>
+</html>
+    </textarea>
+
+    <!-- 3. Question / Réponse -->
+    <textarea id="prompt-qr" class="hidden">
+Lisez ce code très attentivement et en profondeur, puis créez-m’en un exactement semblable, mais appliqué au sujet qui se trouve dans le document PDF joint.
+
+Respectez strictement les consignes suivantes :
+
+Créer strictement suivant le modèle (Code HTML).
+Vous ne devez pas faire référence au cours, par exemple en écrivant « selon le cours ».
+Les phrases doivent être courtes.
+Les phrases doivent être simples et faciles.
+    </textarea>
+
+    <textarea id="code-qr" class="hidden">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Réponses Immunitaires Spécifiques</title>
+    
+    <!-- Polices Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #333;
+            
+            /* Code couleurs thématique basé sur le PDF (Page 3) */
+            --gen-color: #3498db;      /* Bleu : Généralités */
+            --hum-color: #2ecc71;      /* Vert : Immunité Humorale (Lymphocytes B) */
+            --cel-color: #f39c12;      /* Orange : Immunité Cellulaire (Lymphocytes T) */
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.0rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background: var(--hum-color);
+            margin: 15px auto 0;
+            border-radius: 5px;
+        }
+
+        /* Conteneur principal */
+        .quiz-container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        /* Styles des sections */
+        .section-title {
+            padding: 20px 30px;
+            background-color: #ecf0f1;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        /* Accordéon Item */
+        .qa-item {
+            border-bottom: 1px solid #eee;
+        }
+
+        .qa-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Bouton Question */
+        .question {
+            width: 100%;
+            text-align: left;
+            padding: 25px 30px;
+            background: white;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .question:hover {
+            background-color: #fafafa;
+        }
+
+        .question h3 {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.05rem;
+            color: #2c3e50;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        /* Indicateur de couleur à gauche */
+        .qa-item.gen .question { border-left: 5px solid var(--gen-color); }
+        .qa-item.hum .question { border-left: 5px solid var(--hum-color); }
+        .qa-item.cel .question { border-left: 5px solid var(--cel-color); }
+
+        /* Icône + / - */
+        .icon {
+            font-size: 1.5rem;
+            color: #bdc3c7;
+            transition: transform 0.3s ease;
+            margin-left: 15px;
+        }
+
+        .active .icon {
+            transform: rotate(45deg);
+            color: #7f8c8d;
+        }
+
+        /* Réponse (Panneau caché) */
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background-color: #fbfbfb;
+        }
+
+        .answer-content {
+            padding: 20px 30px 30px 35px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .answer p { margin: 0 0 10px 0; }
+        .answer ul { margin: 0; padding-left: 20px; }
+        .answer li { margin-bottom: 5px; }
+        
+        .answer strong {
+            color: #333;
+            font-weight: 700;
+        }
+
+        /* Badges dans la réponse */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: white;
+            text-transform: uppercase;
+        }
+        
+        .badge.gen { background-color: var(--gen-color); }
+        .badge.hum { background-color: var(--hum-color); }
+        .badge.cel { background-color: var(--cel-color); }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            .question { padding: 20px; }
+            .answer-content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Les Réponses Immunitaires Spécifiques</h1>
+        <p style="color: #7f8c8d;">Concepts clés : Humorale vs Cellulaire</p>
+    </header>
+
+    <div class="quiz-container">
+
+        <!-- I. Concepts Généraux -->
+        <div class="section-title" style="color: var(--gen-color);">I. Concepts Généraux</div>
+
+        <div class="qa-item gen">
+            <button class="question">
+                <h3>Quelle est la différence fondamentale entre une toxine et une anatoxine ?</h3>
+                <span class="icon">+</span>
+            </button>
+            <div class="answer">
+                <div class="answer-content">
+                    <span class="badge gen">Définition</span>
+                    <ul>
+                        <li><strong>Toxine :</strong> Substance toxique et mortelle sécrétée par certaines bactéries (exemple : le bacille tétanique).</li>
+                        <li><strong>Anatoxine :</strong> Toxine modifiée qui a perdu son pouvoir pathogène (ne rend pas malade) mais conserve sa forme, permettant d'acquérir une immunité.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-item gen">
+            <button class="question">
+                <h3>Pourquoi dit-on que cette immunité est "spécifique" ?</h3>
+                <span class="icon">+</span>
+            </button>
+            <div class="answer">
+                <div class="answer-content">
+                    <span class="badge gen">Propriété</span>
+                    <p>L'immunité est spécifique car elle cible un seul type d'antigène à la fois.</p>
+                    <p>Par exemple, un organisme immunisé contre le tétanos ne l'est pas contre la diphtérie. Le système immunitaire doit apprendre à reconnaître chaque maladie séparément.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- II. Voie Humorale -->
+        <div class="section-title" style="color: var(--hum-color);">II. L'Immunité Humorale</div>
+
+        <div class="qa-item hum">
+            <button class="question">
+                <h3>Comment le sérum peut-il protéger un organisme ?</h3>
+                <span class="icon">+</span>
+            </button>
+            <div class="answer">
+                <div class="answer-content">
+                    <span class="badge hum">Le Sérum</span>
+                    <p>Le sérum (partie liquide du sang sans cellules) contient des <strong>anticorps</strong>.</p>
+                    <p>Lorsqu'on injecte le sérum d'un individu immunisé à un individu sain, on lui transfère ces anticorps qui vont neutraliser directement les toxines ou les microbes circulant dans le sang.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-item hum">
+            <button class="question">
+                <h3>Quel est le mécanisme d'action de l'immunité humorale ?</h3>
+                <span class="icon">+</span>
+            </button>
+            <div class="answer">
+                <div class="answer-content">
+                    <span class="badge hum">Acteurs : LB</span>
+                    <ul>
+                        <li>Les <strong>Lymphocytes B</strong> reconnaissent l'antigène.</li>
+                        <li>Ils se multiplient et se différencient en <strong>Plasmocytes</strong>.</li>
+                        <li>Les plasmocytes sécrètent des anticorps spécifiques qui forment des "complexes immuns" pour neutraliser l'agent infectieux.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- III. Voie Cellulaire -->
+        <div class="section-title" style="color: var(--cel-color);">III. L'Immunité Cellulaire</div>
+
+        <div class="qa-item cel">
+            <button class="question">
+                <h3>Pourquoi les anticorps sont-ils inefficaces contre certaines maladies comme la tuberculose ?</h3>
+                <span class="icon">+</span>
+            </button>
+            <div class="answer">
+                <div class="answer-content">
+                    <span class="badge cel">Limite des anticorps</span>
+                    <p>Certains bacilles (comme celui de Koch responsable de la tuberculose) se cachent <strong>à l'intérieur</strong> des cellules.</p>
+                    <p>Les anticorps ne peuvent agir que sur ce qui circule dans les liquides (sang/lymphe). Ils ne peuvent pas atteindre les bactéries intracellulaires.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="qa-item cel">
+            <button class="question">
+                <h3>Comment l'organisme élimine-t-il les cellules infectées ?</h3>
+                <span class="icon">+</span>
+            </button>
+            <div class="answer">
+                <div class="answer-content">
+                    <span class="badge cel">Acteurs : LT</span>
+                    <p>C'est l'immunité à médiation cellulaire qui intervient :</p>
+                    <ul>
+                        <li>Les <strong>Lymphocytes T8</strong> reconnaissent l'antigène.</li>
+                        <li>Ils se différencient en <strong>Lymphocytes Tc (Cytotoxiques)</strong>.</li>
+                        <li>Ces cellules "tueuses" détruisent directement la cellule infectée par contact (lyse ou apoptose).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- IV. Synthèse -->
+        <div class="section-title" style="color: #7f8c8d;">IV. Synthèse du Mécanisme</div>
+
+        <div class="qa-item gen">
+            <button class="question">
+                <h3>Quelles sont les étapes chronologiques d'une réponse immunitaire ?</h3>
+                <span class="icon">+</span>
+            </button>
+            <div class="answer">
+                <div class="answer-content">
+                    <span class="badge gen">Chronologie</span>
+                    <p>Que ce soit pour la voie humorale ou cellulaire, la réponse suit toujours cet ordre :</p>
+                    <ol>
+                        <li><strong>Reconnaissance :</strong> Identification de l'intrus.</li>
+                        <li><strong>Multiplication :</strong> Augmentation du nombre de lymphocytes concernés.</li>
+                        <li><strong>Différenciation :</strong> Transformation en cellules effectrices (Plasmocytes ou Tc).</li>
+                        <li><strong>Élimination :</strong> Destruction de l'antigène (Phase effectrice).</li>
+                    </ol>
+                    <p><em>Rappel :</em> Une partie des cellules devient des lymphocytes "Mémoires" pour protéger l'organisme durablement.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const questions = document.querySelectorAll('.question');
+
+        questions.forEach(question => {
+            question.addEventListener('click', () => {
+                const qaItem = question.parentElement;
+                const answer = question.nextElementSibling;
+                
+                const isActive = qaItem.classList.contains('active');
+
+                document.querySelectorAll('.qa-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.answer').style.maxHeight = null;
+                });
+
+                if (!isActive) {
+                    qaItem.classList.add('active');
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+    </textarea>
+
+    <!-- JS Logic -->
+    <script>
+        let toastTimeout;
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            toastMessage.textContent = message;
+            
+            // Show toast
+            toast.classList.remove('toast-leave');
+            toast.classList.add('toast-enter');
+            
+            // Clear existing timeout if multiple clicks
+            if (toastTimeout) {
+                clearTimeout(toastTimeout);
+            }
+            
+            // Hide toast after 3 seconds
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('toast-enter');
+                toast.classList.add('toast-leave');
+            }, 3000);
+        }
+
+        function copyCombinedContent(promptId, codeId, typeName) {
+            const promptContent = document.getElementById(promptId).value.trim();
+            const codeContent = document.getElementById(codeId).value.trim();
+            
+            const combinedContent = promptContent + "\n\n Base-toi entièrement sur le code suivant pour la conception et les polices, mais tu peux modifier les couleurs.\n\n" + codeContent;
+            
+            // We create a temporary textarea in the DOM to perform the copy safely
+            const tempTextArea = document.createElement("textarea");
+            tempTextArea.value = combinedContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            
+            try {
+                document.execCommand("copy");
+                showToast(typeName + " copié avec succès !");
+            } catch (err) {
+                console.error("Échec de la copie", err);
+                showToast("Erreur lors de la copie.");
+            }
+            
+            document.body.removeChild(tempTextArea);
+        }
+    </script>
+</body>
+</html>
