@@ -817,6 +817,47 @@
       .slider-button.previous { left: 1px; }
       .slider-button.next { right: 1px; }
       .image-slider figure { width: calc(100% - 34px); }
+
+      .bank {
+        position: sticky;
+        top: 8px;
+        z-index: 30;
+        min-height: 68px;
+        max-height: 82px;
+        margin-bottom: 12px;
+        padding: 11px;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        overflow-y: hidden;
+        overscroll-behavior-x: contain;
+        scrollbar-width: thin;
+        border-style: solid;
+        border-color: #6ee7b7;
+        background: rgba(255, 255, 255, .97);
+        box-shadow: 0 8px 22px rgba(6, 95, 70, .16);
+        backdrop-filter: blur(8px);
+      }
+
+      .bank::before { display: none; }
+      .bank .card { flex: 0 0 auto; white-space: nowrap; }
+      .bank:empty {
+        position: static;
+        min-height: 0;
+        max-height: 0;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .system-zone { min-height: 138px; padding: 11px; }
+      .system-zone .drop-content { min-height: 58px; }
+      .zone-title { margin-bottom: 8px; padding-bottom: 8px; }
+      .zone-title span { font-size: 1.45rem; }
+
+      .method-row { gap: 8px; }
+      .method-sentence { min-height: 68px; }
     }
   </style>
 </head>
@@ -1110,6 +1151,7 @@
       selectedCard = card;
       card.classList.add('selected');
       card.focus();
+      collapseReferenceForMobile(card);
     }
 
     function startTouchDrag(event) {
@@ -1206,6 +1248,7 @@
       } else {
         zone.appendChild(card);
       }
+      collapseReferenceForMobile(card);
       hideFeedback(card.dataset.group === 'organs' ? 1 : 2);
     }
 
@@ -1342,6 +1385,16 @@
       const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!isExpanded));
       fold.classList.toggle('collapsed', isExpanded);
+    }
+
+    function collapseReferenceForMobile(card) {
+      if (card.dataset.group !== 'organs' || !window.matchMedia('(max-width: 620px)').matches) return;
+      const toggle = document.getElementById('referenceToggle');
+      const fold = document.getElementById('referenceFold');
+      if (toggle.getAttribute('aria-expanded') === 'true') {
+        toggle.setAttribute('aria-expanded', 'false');
+        fold.classList.add('collapsed');
+      }
     }
 
     function showResults() {
