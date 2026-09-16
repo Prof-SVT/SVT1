@@ -807,6 +807,8 @@
     }
 
     .slider-dots button.active { width: 25px; background: #059669; }
+    .zone-count,
+    .method-mobile-reference { display: none; }
 
     @media (max-width: 620px) {
       .home-page { min-height: 560px; }
@@ -819,45 +821,102 @@
       .image-slider figure { width: calc(100% - 34px); }
 
       .bank {
-        position: sticky;
-        top: 8px;
-        z-index: 30;
-        min-height: 68px;
-        max-height: 82px;
-        margin-bottom: 12px;
-        padding: 11px;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        overflow-x: auto;
-        overflow-y: hidden;
-        overscroll-behavior-x: contain;
-        scrollbar-width: thin;
-        border-style: solid;
-        border-color: #6ee7b7;
-        background: rgba(255, 255, 255, .97);
-        box-shadow: 0 8px 22px rgba(6, 95, 70, .16);
-        backdrop-filter: blur(8px);
-      }
-
-      .bank::before { display: none; }
-      .bank .card { flex: 0 0 auto; white-space: nowrap; }
-      .bank:empty {
         position: static;
-        min-height: 0;
-        max-height: 0;
-        margin: 0;
-        padding: 0;
-        border: 0;
+        min-height: 94px;
+        margin-bottom: 12px;
+        padding: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 7px;
+        overflow: visible;
+        border-color: #6ee7b7;
+        background: #ecfdf5;
         box-shadow: none;
       }
 
-      .system-zone { min-height: 138px; padding: 11px; }
-      .system-zone .drop-content { min-height: 58px; }
-      .zone-title { margin-bottom: 8px; padding-bottom: 8px; }
-      .zone-title span { font-size: 1.45rem; }
+      .bank::before { display: block; color: #065f46; }
+      .bank .card,
+      .bank .card.mobile-current {
+        display: inline-flex;
+        flex: 0 1 auto;
+        min-width: 0;
+        min-height: 39px;
+        padding: 7px 10px;
+        font-size: .8rem;
+      }
 
-      .method-row { gap: 8px; }
-      .method-sentence { min-height: 68px; }
+      .systems-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .system-zone { min-height: 145px; padding: 9px; }
+      .system-zone:last-child { grid-column: 1 / -1; }
+      .system-zone .drop-content {
+        display: flex;
+        justify-content: center;
+        align-content: flex-start;
+        min-height: 55px;
+        gap: 5px;
+      }
+      .system-zone .drop-content .card {
+        display: inline-flex;
+        min-height: 31px;
+        padding: 5px 7px;
+        font-size: .68rem;
+        line-height: 1.15;
+      }
+      .zone-title {
+        height: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 6px;
+        margin: 0 0 7px;
+        padding: 0 0 7px;
+        border-bottom: 1px solid #d1fae5;
+        text-align: center;
+      }
+      .zone-title span { font-size: 1.35rem; }
+      .zone-title h4 { font-size: .68rem; letter-spacing: .02em; }
+      .zone-title small { display: none; }
+      .zone-count {
+        display: inline-grid;
+        place-items: center;
+        min-width: 22px;
+        height: 22px;
+        margin: 3px auto 0;
+        padding: 0 5px;
+        color: #ffffff;
+        background: #047857;
+        border-radius: 999px;
+        font-size: .7rem;
+      }
+
+      .method-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+      }
+      .method-row { display: flex; flex-direction: column; gap: 5px; }
+      .method-icon { width: 32px; height: 32px; margin: 0 auto; font-size: .9rem; }
+      .method-sentence { min-height: 74px; padding: 6px; justify-content: center; }
+      .method-sentence > span { display: none; }
+      .method-sentence .drop-zone { min-width: 0; width: 100%; min-height: 56px; }
+      .method-sentence .card { padding: 6px 4px; font-size: .72rem; }
+
+      .method-mobile-reference {
+        display: block;
+        margin-top: 14px;
+        padding: 13px 15px;
+        border-left: 4px solid #059669;
+        border-radius: 0 10px 10px 0;
+        color: #374151;
+        background: #f9fafb;
+        font-size: .78rem;
+        line-height: 1.5;
+      }
+      .method-mobile-reference strong { color: #065f46; }
+      .method-mobile-reference p { margin: 5px 0; }
     }
   </style>
 </head>
@@ -946,15 +1005,15 @@
 
         <div class="systems-grid">
           <div class="system-zone digestive" data-zone="digestif" tabindex="0" role="button" aria-label="Déposer dans le système digestif">
-            <div class="zone-title"><span aria-hidden="true">🍽️</span><div><h4>Système digestif</h4><small>Digérer les aliments</small></div></div>
+            <div class="zone-title"><span aria-hidden="true">🍽️</span><div><h4>Système digestif</h4><small>Digérer les aliments</small><b class="zone-count" data-count-zone="digestif">0</b></div></div>
             <div class="drop-content"></div>
           </div>
           <div class="system-zone respiratory" data-zone="respiratoire" tabindex="0" role="button" aria-label="Déposer dans le système respiratoire">
-            <div class="zone-title"><span aria-hidden="true">🫁</span><div><h4>Système respiratoire</h4><small>Respirer l’air</small></div></div>
+            <div class="zone-title"><span aria-hidden="true">🫁</span><div><h4>Système respiratoire</h4><small>Respirer l’air</small><b class="zone-count" data-count-zone="respiratoire">0</b></div></div>
             <div class="drop-content"></div>
           </div>
           <div class="system-zone circulatory" data-zone="circulatoire" tabindex="0" role="button" aria-label="Déposer dans le système circulatoire">
-            <div class="zone-title"><span aria-hidden="true">🫀</span><div><h4>Système circulatoire</h4><small>Faire circuler le sang</small></div></div>
+            <div class="zone-title"><span aria-hidden="true">🫀</span><div><h4>Système circulatoire</h4><small>Faire circuler le sang</small><b class="zone-count" data-count-zone="circulatoire">0</b></div></div>
             <div class="drop-content"></div>
           </div>
         </div>
@@ -1003,6 +1062,12 @@
               <span>les termes scientifiques exacts, l’orthographe en français et l’emplacement des organes.</span>
             </div>
           </div>
+        </div>
+        <div class="method-mobile-reference" aria-label="Rappel de la méthode">
+          <strong>Rappel de la méthode</strong>
+          <p><b>1.</b> Compléter la légende avec les noms en français.</p>
+          <p><b>2.</b> Classer les organes dans le tableau proposé.</p>
+          <p><b>3.</b> Vérifier les termes, l’orthographe et l’emplacement.</p>
         </div>
         <p class="method-note">Astuce : les numéros indiquent l’ordre des actions à réaliser.</p>
 
@@ -1151,7 +1216,6 @@
       selectedCard = card;
       card.classList.add('selected');
       card.focus();
-      collapseReferenceForMobile(card);
     }
 
     function startTouchDrag(event) {
@@ -1248,12 +1312,33 @@
       } else {
         zone.appendChild(card);
       }
-      collapseReferenceForMobile(card);
+      updateMobileFlow(card.dataset.group);
       hideFeedback(card.dataset.group === 'organs' ? 1 : 2);
     }
 
     function clearDragStyles() {
       document.querySelectorAll('.drag-over').forEach(zone => zone.classList.remove('drag-over'));
+    }
+
+    function updateMobileFlow(group) {
+      const isOrgans = group === 'organs';
+      const bank = document.getElementById(isOrgans ? 'organBank' : 'methodBank');
+      const total = isOrgans ? organItems.length : methodItems.length;
+      const cardsInBank = [...bank.querySelectorAll(':scope > .card')];
+
+      document.querySelectorAll(`.card[data-group="${group}"]`).forEach(card => card.classList.remove('mobile-current'));
+      if (cardsInBank[0]) cardsInBank[0].classList.add('mobile-current');
+
+      bank.dataset.label = cardsInBank.length
+        ? `${cardsInBank.length} ${isOrgans ? (cardsInBank.length === 1 ? 'organe à classer' : 'organes à classer') : (cardsInBank.length === 1 ? 'mot-clé à placer' : 'mots-clés à placer')}`
+        : `Tous les ${isOrgans ? 'organes' : 'mots-clés'} sont placés`;
+
+      if (isOrgans) {
+        document.querySelectorAll('[data-count-zone]').forEach(counter => {
+          const content = document.querySelector(`.system-zone[data-zone="${counter.dataset.countZone}"] .drop-content`);
+          counter.textContent = content ? content.querySelectorAll('.card').length : '0';
+        });
+      }
     }
 
     function renderQuestion1() {
@@ -1262,6 +1347,7 @@
       const bank = document.getElementById('organBank');
       bank.innerHTML = '';
       shuffle(organItems).forEach(item => bank.appendChild(createCard(item, 'organs')));
+      updateMobileFlow('organs');
       document.getElementById('check1').classList.remove('hidden');
       document.getElementById('nextQuestion').classList.add('hidden');
       scores.q1 = 0;
@@ -1274,6 +1360,7 @@
       const bank = document.getElementById('methodBank');
       bank.innerHTML = '';
       shuffle(methodItems).forEach(item => bank.appendChild(createCard(item, 'method')));
+      updateMobileFlow('method');
       scores.q2 = 0;
       hideFeedback(2);
     }
@@ -1304,7 +1391,16 @@
         document.getElementById('check1').classList.add('hidden');
         document.getElementById('nextQuestion').classList.remove('hidden');
       } else {
-        showFeedback(1, 'error', `${correct} bonne${correct > 1 ? 's' : ''} réponse${correct > 1 ? 's' : ''} sur ${organItems.length}. Les étiquettes rouges sont à déplacer.`);
+        if (window.matchMedia('(max-width: 620px)').matches) {
+          cards.filter(card => card.classList.contains('wrong')).forEach(card => {
+            card.classList.remove('wrong');
+            bank.appendChild(card);
+          });
+          updateMobileFlow('organs');
+          showFeedback(1, 'error', `${correct} réponse${correct > 1 ? 's' : ''} correcte${correct > 1 ? 's' : ''}. Les organes à corriger reviennent un par un.`);
+        } else {
+          showFeedback(1, 'error', `${correct} bonne${correct > 1 ? 's' : ''} réponse${correct > 1 ? 's' : ''} sur ${organItems.length}. Les étiquettes rouges sont à déplacer.`);
+        }
       }
     }
 
@@ -1329,7 +1425,16 @@
         showFeedback(2, 'success', 'Très bien ! Tu as reconstitué toute la méthode.');
         setTimeout(showResults, 650);
       } else {
-        showFeedback(2, 'error', `${correct} bonne${correct > 1 ? 's' : ''} réponse${correct > 1 ? 's' : ''} sur ${methodItems.length}. Corrige les mots-clés affichés en rouge.`);
+        if (window.matchMedia('(max-width: 620px)').matches) {
+          cards.filter(card => card.classList.contains('wrong')).forEach(card => {
+            card.classList.remove('wrong');
+            bank.appendChild(card);
+          });
+          updateMobileFlow('method');
+          showFeedback(2, 'error', `${correct} réponse${correct > 1 ? 's' : ''} correcte${correct > 1 ? 's' : ''}. Replace maintenant ${methodItems.length - correct === 1 ? 'le mot-clé' : 'les mots-clés'} à corriger.`);
+        } else {
+          showFeedback(2, 'error', `${correct} bonne${correct > 1 ? 's' : ''} réponse${correct > 1 ? 's' : ''} sur ${methodItems.length}. Corrige les mots-clés affichés en rouge.`);
+        }
       }
     }
 
@@ -1385,16 +1490,6 @@
       const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!isExpanded));
       fold.classList.toggle('collapsed', isExpanded);
-    }
-
-    function collapseReferenceForMobile(card) {
-      if (card.dataset.group !== 'organs' || !window.matchMedia('(max-width: 620px)').matches) return;
-      const toggle = document.getElementById('referenceToggle');
-      const fold = document.getElementById('referenceFold');
-      if (toggle.getAttribute('aria-expanded') === 'true') {
-        toggle.setAttribute('aria-expanded', 'false');
-        fold.classList.add('collapsed');
-      }
     }
 
     function showResults() {
