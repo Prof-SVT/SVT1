@@ -1,0 +1,993 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Conclure à partir de résultats expérimentaux — Activité interactive</title><style>
+    :root {
+      --ink: #1f2937;
+      --muted: #4b5563;
+      --paper: #ffffff;
+      --line: #e5e7eb;
+      --teal: #047857;
+      --teal-dark: #065f46;
+      --teal-light: #10b981;
+      --teal-soft: #ecfdf5;
+      --success: #059669;
+      --success-soft: #d1fae5;
+      --danger: #dc2626;
+      --danger-soft: #fee2e2;
+      --warning: #d97706;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", sans-serif;
+      color: var(--ink);
+      background: #ffffff;
+    }
+    button, .card { font: inherit; }
+    button:focus-visible, .card:focus-visible, .drop-zone:focus-visible, .system-zone:focus-visible {
+      outline: 4px solid rgba(16, 185, 129, .20);
+      outline-offset: 3px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: #ffffff;
+      overflow: hidden;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 20px;
+      color: white;
+      background: #065f46;
+      border-radius: 0 0 8px 8px;
+    }
+    .brand { display: flex; align-items: center; gap: 13px; }
+    .brand-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .13);
+      font-size: 23px;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+      font-style: italic;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .brand p { margin: 4px 0 0; color: #d1fae5; font-size: .75rem; }
+    .progress-pill {
+      flex: 0 0 auto;
+      padding: 7px 12px;
+      border: 0;
+      border-radius: 999px;
+      color: #ffffff;
+      background: #064e3b;
+      font-weight: 800;
+      font-size: .68rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    main { padding: 28px 24px 36px; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      gap: 18px;
+      margin-bottom: 26px;
+      padding-top: 12px;
+      text-align: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 8px;
+      color: #047857;
+      font-weight: 900;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .hero h2 {
+      margin: 0;
+      color: #1f2937;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-style: italic;
+      line-height: 1.04;
+      letter-spacing: -.035em;
+    }
+    .hero h2 span { color: #047857; }
+    .hero-copy { max-width: 760px; margin: 12px auto 0; color: #4b5563; line-height: 1.65; }
+    .mini-visual {
+      width: min(100%, 430px);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      padding: 12px;
+      border: 1px solid #d1fae5;
+      border-radius: 18px;
+      background: #ecfdf5;
+    }
+    .organ-bubble {
+      display: grid;
+      place-items: center;
+      min-height: 74px;
+      border: 1px solid #d1fae5;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(6, 95, 70, .08);
+      font-size: 2.25rem;
+    }
+    .home-page {
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0 24px;
+      text-align: center;
+    }
+    .home-page .hero { width: 100%; }
+    .instructions {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      max-width: 900px;
+      margin: 0 auto 25px;
+      padding: 15px 18px;
+      color: #065f46;
+      background: #ecfdf5;
+      border-left: 5px solid #10b981;
+      border-radius: 0 12px 12px 0;
+      line-height: 1.5;
+      text-align: left;
+    }
+    .instructions strong { color: #065f46; }
+    .home-instructions { width: min(100%, 780px); }
+    .home-instructions ol { margin: 10px 0 0; padding-left: 22px; }
+    .home-instructions li { margin: 5px 0; }
+
+    .btn {
+      min-height: 45px;
+      padding: 11px 20px;
+      border: 0;
+      border-radius: 8px;
+      font-size: .875rem;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform .16s ease, filter .16s ease;
+    }
+    .btn:hover { filter: brightness(.96); transform: translateY(-1px); }
+    .btn-primary { color: #ffffff; background: #065f46; }
+    .btn-primary:hover { background: #000000; }
+    .btn-secondary { color: #047857; background: #d1fae5; }
+    .btn-ghost { color: #047857; background: #ffffff; border: 1px solid #a7f3d0; }
+    .start-button {
+      margin-top: 4px;
+      padding: 13px 36px;
+      border-radius: 999px;
+      font-size: 1.05rem;
+      font-style: italic;
+      box-shadow: 0 8px 20px rgba(6, 95, 70, .18);
+    }
+
+    .step-panel { display: none; animation: fadeIn .35s ease; }
+    .step-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } }
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      max-width: 900px;
+      margin: 0 auto 16px;
+    }
+    .step-number {
+      display: grid;
+      place-items: center;
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      color: white;
+      background: #047857;
+      border-radius: 50%;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+    .section-heading h3 { margin: 1px 0 4px; color: #1f2937; font-size: clamp(1.25rem, 3vw, 1.7rem); font-style: italic; }
+    .section-heading p { margin: 0; color: #4b5563; }
+
+    .reference-section {
+      max-width: 1000px;
+      margin: 0 auto 22px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+    .reference-toggle {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 12px 15px;
+      border: 0;
+      border-bottom: 1px solid #e5e7eb;
+      color: #065f46;
+      background: #f3f4f6;
+      cursor: pointer;
+      text-align: left;
+      font-size: .78rem;
+      letter-spacing: .045em;
+      text-transform: uppercase;
+    }
+    .reference-toggle:hover { background: #e5e7eb; }
+    .reference-chevron { font-size: 1.25rem; transition: transform .25s ease; }
+    .reference-toggle[aria-expanded="false"] .reference-chevron { transform: rotate(180deg); }
+    .reference-fold {
+      max-height: 640px;
+      padding: 18px;
+      opacity: 1;
+      overflow: hidden;
+      background: #f9fafb;
+      transition: max-height .35s ease, padding .35s ease, opacity .25s ease;
+    }
+    .reference-fold.collapsed { max-height: 0; padding-top: 0; padding-bottom: 0; opacity: 0; }
+    .image-slider { display: flex; align-items: center; justify-content: center; min-height: 390px; }
+    .image-slider figure { width: min(100%, 650px); margin: 0; text-align: center; }
+    .image-slider img {
+      display: block;
+      width: 100%;
+      height: 360px;
+      object-fit: contain;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #ffffff;
+      box-shadow: 0 1px 4px rgba(17, 24, 39, .08);
+    }
+    .image-slider figcaption { margin-top: 10px; color: #065f46; font-size: .9rem; }
+
+    .bank {
+      min-height: 94px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      max-width: 1000px;
+      padding: 17px;
+      margin: 0 auto 20px;
+      border: 2px dashed #d1d5db;
+      border-radius: 12px;
+      background: #f9fafb;
+      box-shadow: inset 0 2px 5px rgba(17, 24, 39, .04);
+    }
+    .bank::before {
+      content: attr(data-label);
+      flex: 0 0 100%;
+      color: #4b5563;
+      text-align: center;
+      font-size: .76rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .card {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 8px 13px;
+      color: #374151;
+      background: #ffffff;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(17, 24, 39, .08);
+      cursor: grab;
+      user-select: none;
+      touch-action: none;
+      font-size: .875rem;
+      font-style: italic;
+      font-weight: 600;
+      text-align: center;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    }
+    .card:hover { color: #047857; border-color: #10b981; box-shadow: 0 3px 8px rgba(5, 150, 105, .12); transform: translateY(-2px); }
+    .card.selected { border-color: #059669; box-shadow: 0 0 0 4px rgba(16, 185, 129, .16); transform: translateY(-2px); }
+    .card.correct { color: #064e3b; background: #d1fae5; border-color: #059669; font-weight: 700; }
+    .card.wrong { color: #991b1b; background: #fee2e2; border-color: #dc2626; animation: shake .28s ease; }
+    .card.locked { cursor: default; }
+    @keyframes shake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .system-zone {
+      min-height: 185px;
+      padding: 15px;
+      color: #047857;
+      background: #ffffff;
+      border: 2px dashed #34d399;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(17, 24, 39, .06);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .system-zone.drag-over, .drop-zone.drag-over {
+      background: #ecfdf5;
+      border-color: #059669;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, .13);
+      transform: scale(1.015);
+    }
+    .zone-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #d1fae5;
+    }
+    .zone-title span { font-size: 1.8rem; }
+    .zone-title h4 { margin: 0; color: #064e3b; text-transform: uppercase; letter-spacing: .08em; font-size: .84rem; }
+    .zone-title small { display: block; margin-top: 2px; color: #6b7280; font-weight: 600; }
+    .drop-content { display: flex; flex-wrap: wrap; align-content: flex-start; justify-content: center; gap: 8px; min-height: 92px; }
+    .system-zone .card { width: min(100%, 370px); color: #374151; }
+
+    .classification-table-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid #a7f3d0;
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(17, 24, 39, .07);
+    }
+    .classification-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+    .classification-table th,
+    .classification-table td {
+      border: 1px solid #a7f3d0;
+    }
+    .classification-table thead th {
+      padding: 13px 10px;
+      color: #ffffff;
+      background: #047857;
+      font-size: .95rem;
+      text-align: center;
+    }
+    .classification-table thead th:first-child { width: 24%; background: #065f46; }
+    .classification-table tbody th {
+      width: 24%;
+      padding: 14px 12px;
+      color: #065f46;
+      background: #ecfdf5;
+      text-align: left;
+      vertical-align: middle;
+    }
+    .classification-table tbody th strong { display: block; font-size: .95rem; }
+    .classification-table tbody th small { display: block; margin-top: 5px; color: #047857; font-size: .76rem; line-height: 1.3; }
+    .classification-table .system-zone {
+      height: 165px;
+      min-height: 0;
+      padding: 10px;
+      border-radius: 0;
+      border-style: solid;
+      box-shadow: none;
+      vertical-align: top;
+    }
+    .classification-table .drop-content {
+      min-height: 140px;
+      align-content: center;
+    }
+    .classification-table .system-zone .card { width: min(100%, 260px); }
+
+    .method-list { display: grid; gap: 14px; max-width: 900px; margin: 0 auto; }
+    .method-row { display: grid; grid-template-columns: 52px 1fr; gap: 13px; align-items: stretch; }
+    .method-icon {
+      display: grid;
+      place-items: center;
+      color: white;
+      border-radius: 999px;
+      background: #047857;
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+    .method-sentence {
+      display: flex;
+      align-items: center;
+      min-height: 82px;
+      padding: 14px 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 1px 3px rgba(17, 24, 39, .06);
+    }
+    .drop-zone {
+      width: 100%;
+      min-height: 58px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      color: #065f46;
+      background: #f9fafb;
+      border: 2px dashed #6ee7b7;
+      border-radius: 8px;
+      transition: all .16s ease;
+    }
+    .drop-zone:empty::after { content: "Dépose la phrase ici"; color: #6b7280; font-size: .78rem; font-style: italic; }
+    .drop-zone .card { width: 100%; box-shadow: none; }
+    .method-note { max-width: 900px; margin: 18px auto 0; color: #4b5563; font-size: .9rem; }
+    .measure-statement {
+      max-width: 900px;
+      margin: 0 auto 18px;
+      padding: 15px 18px;
+      color: #065f46;
+      background: #ecfdf5;
+      border-left: 5px solid #10b981;
+      border-radius: 0 12px 12px 0;
+      line-height: 1.5;
+    }
+    .measure-label {
+      display: block;
+      flex: 0 0 125px;
+      color: #064e3b;
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .measure-list .method-sentence { gap: 12px; }
+    .measure-list .drop-zone { flex: 1 1 300px; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      max-width: 1000px;
+      margin: 24px auto 0;
+      padding-top: 21px;
+      border-top: 1px solid #e5e7eb;
+    }
+    .actions-right { display: flex; flex-wrap: wrap; gap: 10px; margin-left: auto; }
+    .feedback {
+      display: none;
+      max-width: 1000px;
+      margin: 18px auto 0;
+      padding: 15px 17px;
+      border-radius: 10px;
+      font-weight: 750;
+      line-height: 1.5;
+    }
+    .feedback.show { display: block; }
+    .feedback.success { color: #064e3b; background: #ecfdf5; border-left: 5px solid #059669; }
+    .feedback.error { color: #991b1b; background: #fef2f2; border-left: 5px solid #dc2626; }
+    .feedback.warning { color: #92400e; background: #fffbeb; border-left: 5px solid #f59e0b; }
+
+    .result-card {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(22px, 5vw, 42px);
+      border: 1px solid #a7f3d0;
+      border-radius: 16px;
+      background: #ecfdf5;
+      box-shadow: 0 1px 3px rgba(17, 24, 39, .06);
+      text-align: center;
+    }
+    .result-icon { font-size: 3.7rem; }
+    .result-card h3 { margin: 8px 0 4px; font-size: clamp(1.8rem, 5vw, 2.7rem); }
+    .score { margin: 12px 0; color: #047857; font-size: clamp(3rem, 9vw, 5.5rem); font-weight: 950; line-height: 1; }
+    .result-card p { color: #4b5563; line-height: 1.6; }
+    .recap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 22px 0; text-align: left; }
+    .recap div { padding: 13px; border: 1px solid #d1fae5; border-radius: 10px; background: white; }
+    .recap strong { display: block; margin-bottom: 5px; color: #065f46; }
+    .recap span { color: #4b5563; font-size: .83rem; }
+
+    .drag-clone {
+      position: fixed !important;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: .92;
+      transform: rotate(2deg);
+      box-shadow: 0 12px 28px rgba(13, 56, 88, .28) !important;
+    }
+    .hidden { display: none !important; }
+    footer {
+      padding: 16px 28px;
+      color: #6b7280;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+      text-align: center;
+      font-size: .78rem;
+    }
+
+    @media (max-width: 620px) {
+      header { padding: 15px; }
+      .brand-icon, .progress-pill { display: none; }
+      main { padding: 20px 14px 30px; }
+      .home-page { min-height: 560px; }
+      .mini-visual { padding: 10px; }
+      .organ-bubble { min-height: 70px; font-size: 2rem; }
+      .reference-fold { padding: 12px 7px; }
+      .image-slider { min-height: 260px; }
+      .image-slider figure { width: calc(100% - 12px); }
+      .image-slider img { height: 245px; }
+      .bank {
+        position: static;
+        min-height: 94px;
+        margin-bottom: 12px;
+        padding: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 7px;
+        overflow: visible;
+        border-color: #6ee7b7;
+        background: #ecfdf5;
+        box-shadow: none;
+      }
+      .bank::before { color: #065f46; }
+      .bank .card { flex: 0 1 auto; min-width: 0; min-height: 39px; padding: 7px 10px; font-size: .8rem; }
+      .systems-grid { gap: 9px; }
+      .system-zone { min-height: 150px; padding: 9px; }
+      .system-zone .drop-content { min-height: 65px; gap: 5px; }
+      .system-zone .drop-content .card { min-height: 38px; padding: 6px 7px; font-size: .72rem; line-height: 1.2; }
+      .classification-table-wrap { overflow: visible; }
+      .classification-table thead th { padding: 9px 5px; font-size: .72rem; line-height: 1.2; }
+      .classification-table thead th:first-child { width: 25%; }
+      .classification-table tbody th { width: 25%; padding: 8px 6px; text-align: center; }
+      .classification-table tbody th strong { font-size: .72rem; }
+      .classification-table tbody th small { font-size: .62rem; }
+      .classification-table .system-zone { height: 140px; padding: 6px; }
+      .classification-table .drop-content { min-height: 126px; gap: 5px; }
+      .classification-table .system-zone .card { min-height: 34px; padding: 5px 4px; font-size: .68rem; }
+      .zone-title { justify-content: center; gap: 6px; margin: 0 0 7px; padding: 0 0 7px; text-align: center; }
+      .zone-title span { font-size: 1.35rem; }
+      .zone-title h4 { font-size: .67rem; letter-spacing: .02em; }
+      .zone-title small { font-size: .67rem; }
+      .method-list { grid-template-columns: 1fr; gap: 9px; }
+      .method-row { grid-template-columns: 38px 1fr; gap: 7px; }
+      .method-icon { width: 38px; min-height: 72px; font-size: .95rem; }
+      .method-sentence { min-height: 86px; padding: 7px; }
+      .drop-zone { min-height: 66px; }
+      .method-sentence .card { padding: 7px 5px; font-size: .75rem; line-height: 1.32; }
+      .measure-list .method-sentence { flex-wrap: wrap; }
+      .measure-label { flex-basis: 100%; text-align: center; }
+      .actions, .actions-right { width: 100%; }
+      .btn { flex: 1; }
+      .recap { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 380px) {
+      .systems-grid { grid-template-columns: 1fr; }
+      .system-zone { min-height: 125px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+    }
+    .systems-grid.three-zones { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .three-zones .system-zone { min-height: 205px; }
+    .three-zones .system-zone .card { font-size: .8rem; line-height: 1.35; }
+
+    .compact-graph {
+      display: flex;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 0 auto 18px;
+      padding: 12px;
+      border: 1px solid #d1fae5;
+      border-radius: 12px;
+      background: #f9fafb;
+    }
+    .compact-graph img {
+      display: block;
+      width: min(100%, 650px);
+      height: 320px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #ffffff;
+    }
+
+    .data-table-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid #d1fae5;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+    .data-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .data-table caption {
+      padding: 13px;
+      color: #065f46;
+      background: #ecfdf5;
+      font-weight: 800;
+      font-style: italic;
+    }
+    .data-table th, .data-table td {
+      padding: 8px;
+      border: 1px solid #a7f3d0;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .data-table th:first-child, .data-table td:first-child { width: 31%; }
+    .data-table th { color: #064e3b; background: #f0fdf4; font-size: .82rem; }
+    .data-table td:first-child { color: #065f46; background: #f9fafb; font-weight: 800; }
+    .data-table .drop-zone { min-height: 58px; }
+
+    .description-list { display: grid; gap: 14px; max-width: 1000px; margin: 0 auto; }
+    .description-card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      min-height: 96px;
+      padding: 15px;
+      border: 1px solid #d1fae5;
+      border-left: 6px solid #10b981;
+      border-radius: 12px;
+      background: #ffffff;
+      line-height: 1.5;
+    }
+    .description-card strong { flex: 0 0 100%; color: #065f46; }
+    .fern-line { border-left-color: #ef4444; }
+    .inline-drop { flex: 0 1 100px; width: 100px; min-height: 48px; }
+    .wide-drop { flex-basis: 135px; width: 135px; }
+    .inline-drop .card { min-width: 0; padding: 6px 8px; font-size: .78rem; }
+    .drop-zone:empty::after { content: attr(data-placeholder); }
+    .answer-row { grid-template-columns: 52px minmax(220px, 1fr) minmax(170px, 240px); }
+    .answer-row .method-sentence { display: flex; align-items: center; }
+    .answer-row .drop-zone { min-width: 0; }
+    .multi-zone .drop-content { min-height: 120px; }
+    .multi-zone .card { width: auto; max-width: 100%; }
+    .support-graph img { height: auto; max-height: 520px; }
+    .comparison-graph img { height: auto; max-height: 340px; }
+    .key-scroll {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      padding: 8px;
+      border: 1px solid #d1fae5;
+      border-radius: 12px;
+      background: #ffffff;
+      -webkit-overflow-scrolling: touch;
+    }
+    .key-scroll img { display: block; width: min(100%, 760px); min-width: 0; max-width: 760px; height: auto; margin: 0 auto; }
+    .plant-key img { min-width: 690px; }
+    .compact-list { gap: 10px; }
+
+    @media (max-width: 620px) {
+      .systems-grid.three-zones { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .three-zones .system-zone:last-child { grid-column: 1 / -1; }
+      .compact-graph { padding: 7px; }
+      .compact-graph img { height: 220px; }
+      .data-table caption { padding: 9px 5px; font-size: .75rem; }
+      .data-table th, .data-table td { padding: 4px 2px; font-size: .68rem; overflow-wrap: anywhere; }
+      .data-table th { font-size: .66rem; }
+      .data-table .drop-zone { min-height: 66px; padding: 3px; }
+      .data-table .card { min-width: 0; padding: 6px 3px; font-size: .7rem; }
+      .description-card { gap: 6px; padding: 11px 9px; font-size: .82rem; }
+      .inline-drop { flex: 1 1 74px; width: auto; min-width: 70px; }
+      .wide-drop { flex-basis: 105px; }
+      .answer-row { grid-template-columns: 38px 1fr; }
+      .answer-row .method-sentence { min-height: 52px; }
+      .answer-row .drop-zone { grid-column: 2; min-height: 58px; }
+      .support-graph img, .comparison-graph img { height: auto; max-height: none; }
+      .key-scroll img { width: 100%; min-width: 0; }
+      .plant-key img { min-width: 620px; }
+    }
+    @media (max-width: 380px) {
+      .systems-grid.three-zones { grid-template-columns: 1fr; }
+      .three-zones .system-zone:last-child { grid-column: auto; }
+    }
+  
+body {font-family:Inter,Arial,sans-serif} .reference-fold{max-height:1800px}.nested{border:2px solid;border-radius:12px;padding:10px;min-width:0}.outer{background:#faf5ff;border-color:#c084c0}.frame-label{font-weight:800;font-size:.9rem;margin:0 0 10px;color:#263547}.animal-branches{display:grid;grid-template-columns:1fr 2fr;gap:14px}.leg-branches{display:grid;grid-template-columns:1fr 1fr;gap:14px}.nolegs{background:#ecfdf5;border-color:#34a484}.shell{background:#fff;border-color:#8bc69e}.legs{background:#fffbeb;border-color:#ecc36c}.six{background:#fff;border-color:#dc9b8d}.eight{background:#effaff;border-color:#7ab9df}figure{margin:0}figcaption{text-align:center;color:#334155;font-weight:800;margin-top:8px}.animal-crop{position:relative;overflow:hidden;aspect-ratio:1;background:white;border-radius:8px}.animal-crop img{position:absolute;width:300%;max-width:none;height:100%;top:0;object-fit:fill}.animal-0 img{left:0}.animal-1 img{left:-100%}.animal-2 img{left:-200%}.support-note{font-size:.75rem;color:#64748b;margin:10px 0 0}.clear-key{width:100%;border-collapse:collapse;font-size:.82rem}.clear-key th,.clear-key td{border:1px solid #bcd9cf;padding:9px;text-align:left}.clear-key th{background:#065f46;color:white}.clear-key tr:nth-child(even){background:#f0fdf8}.clear-key td:last-child{font-weight:800;color:#065f46}.key-instruction{margin:0 0 12px;line-height:1.6}.key-wrap{overflow-x:auto}.description-card .drop-zone{flex-basis:240px;width:240px}.description-card .card{font-style:normal;font-size:.88rem}.description-card{line-height:1.7}.bank .card{font-style:normal}.reference-fold.collapsed{padding-top:0;padding-bottom:0}.inline-drop:empty::after{content:'Choisir une étiquette'}.hero-copy{max-width:760px}
+@media(max-width:620px){.reference-fold{padding:9px}.animal-branches{grid-template-columns:1fr;gap:10px}.leg-branches{gap:8px}.nolegs{max-width:100%}.shell figure{max-width:190px;margin:auto}.animal-crop{max-height:210px}.frame-label{font-size:.8rem}.nested{padding:8px}.clear-key{min-width:620px}.description-card .drop-zone{flex-basis:100%;width:100%}header{flex-wrap:wrap}.reference-fold{max-height:2200px}}
+.original-key { overflow-x:auto; margin-bottom:10px; border:1px solid #d1d5db; border-radius:8px; background:white; }.original-key img { display:block; width:100%; height:auto; } .key-dialog { width:96vw; max-width:1900px; max-height:94vh; border:1px solid #a7f3d0; border-radius:12px; padding:12px; } .key-dialog::backdrop { background:rgba(15,23,42,.7); }.key-dialog .original-key { max-height:78vh; overflow:auto; } .key-dialog img { min-width:1100px; }.key-dialog-head { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; color:#065f46; } @media(max-width:620px) { .original-key img { min-width:800px; } }.plant-document {overflow:auto;background:white;border:1px solid #d1d5db;border-radius:8px}.plant-document img{display:block;width:100%;height:auto}@media(max-width:620px){.plant-document img{min-width:800px}}
+.description-card .wide-drop { min-width:min(100%, 300px); flex:1; } .reference-fold p{line-height:1.5} @media(max-width:620px){.plant-document img{min-width:640px}.key-dialog img{min-width:680px}} .plant-document img{aspect-ratio:1120/434} .comparison-wrap{max-width:1000px;margin:auto;overflow-x:auto}.comparison-table{width:100%;border-collapse:collapse;table-layout:fixed}.comparison-table th,.comparison-table td{border:1px solid #8cc4b5;padding:12px}.comparison-table th{background:#ecfdf5;color:#065f46}.comparison-table thead th{background:#065f46;color:white}.comparison-table th:first-child{width:23%}.comparison-table .drop-zone{width:100%;min-width:0;min-height:115px}.comparison-table .card{font-style:normal;text-align:left;line-height:1.5;width:100%}.reference-fold{max-height:1600px}.description-card .drop-zone{flex:1 1 330px}@media(max-width:620px){.comparison-table{min-width:640px}.plant-document img{min-width:640px}.reference-fold{padding:10px}} </style></head><body><div class="app"><header><div class="brand"><div class="brand-icon" aria-hidden="true">🐌</div><div><h1>Conclure à partir de résultats expérimentaux</h1><p>Activité interactive de consolidation · SVT</p></div></div><div class="progress-pill" id="progressPill">Accueil</div></header><main><section id="homePage" class="home-page" aria-labelledby="mainTitle"><div class="hero"><div><p class="eyebrow">Activité 4 · Démarche expérimentale</p><h2 id="mainTitle">Des résultats à <span>la conclusion</span></h2><p class="hero-copy">Aide Ilham à vérifier son hypothèse sur la respiration de l’escargot. Prévois, décris, compare, vérifie et conclus.</p></div><div class="mini-visual"><div class="organ-bubble" title="Observer">🔎</div><div class="organ-bubble" title="Identifier">🏷️</div><div class="organ-bubble" title="Classer">🗂️</div></div></div><div class="instructions home-instructions"><div><strong>Consigne de l’activité :</strong><ol><li>Détermine les résultats attendus.</li><li>Décris les résultats obtenus.</li><li>Compare les résultats attendus et obtenus.</li><li>Vérifie l’hypothèse.</li><li>Formule la conclusion.</li></ol><p>Clique sur une étiquette, puis sur son emplacement, ou utilise le glisser-déposer. Au clavier : sélectionne avec Entrée, puis valide l’emplacement avec Entrée.</p></div></div><button class="btn btn-primary start-button" id="startActivity">Démarrer l’activité</button></section><div id="activityArea" class="hidden"><section class="step-panel active" id="question1" aria-labelledby="q1Title"><div class="section-heading"><div class="step-number">1</div><div><h3 id="q1Title">Détermine les résultats attendus</h3><p>À partir de l’hypothèse, choisis les deux changements attendus dans la boîte contenant l’escargot. Leur ordre n’a pas d’importance.</p></div></div><section class="reference-section"><button class="reference-toggle" type="button" data-toggle="support1" aria-expanded="true"><span><strong>Document · Résultats expérimentaux</strong> — afficher / masquer</span><span class="reference-chevron">⌃</span></button><div class="reference-fold" id="support1"><p><strong>Hypothèse d’Ilham :</strong> « Si je place un escargot dans une boîte, alors la quantité de dioxygène diminue et la quantité de dioxyde de carbone augmente dans l’air de la boîte. »</p><div class="plant-document"><img data-montage alt="Tableau : dioxygène test 21 % puis 19 %, témoin 21 % puis 21 %. Eau de chaux test limpide puis trouble, témoin limpide au début et à la fin."></div><button type="button" class="btn btn-ghost enlarge-montage">Agrandir le tableau</button></div></section><div class="bank" id="bankQuestion1" data-zone="bank1" tabindex="0" data-label="Étiquettes à placer" aria-label="Étiquettes à placer"></div><div class="description-list"><div class="description-card"><strong>Changement attendu 1 :</strong><div class="drop-zone inline-drop wide-drop" data-zone="att1" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></div><div class="description-card"><strong>Changement attendu 2 :</strong><div class="drop-zone inline-drop wide-drop" data-zone="att2" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></div></div><div class="feedback" id="feedback1" role="status"></div><div class="actions"><button class="btn btn-secondary" data-hint="1">Indice</button><button class="btn btn-secondary" data-reset="1">Recommencer</button><button class="btn btn-primary" id="check1">Vérifier</button><button class="btn btn-primary hidden" id="next1">Question suivante</button></div></section><section class="step-panel " id="question2" aria-labelledby="q2Title"><div class="section-heading"><div class="step-number">2</div><div><h3 id="q2Title">Décris les résultats obtenus</h3><p>Lis le tableau et distingue les observations du test de celles du témoin.</p></div></div><section class="reference-section"><button class="reference-toggle" type="button" data-toggle="support2" aria-expanded="true"><span><strong>Document · Résultats expérimentaux</strong> — afficher / masquer</span><span class="reference-chevron">⌃</span></button><div class="reference-fold" id="support2"><p><strong>Hypothèse d’Ilham :</strong> « Si je place un escargot dans une boîte, alors la quantité de dioxygène diminue et la quantité de dioxyde de carbone augmente dans l’air de la boîte. »</p><div class="plant-document"><img data-montage alt="Tableau : dioxygène test 21 % puis 19 %, témoin 21 % puis 21 %. Eau de chaux test limpide puis trouble, témoin limpide au début et à la fin."></div><button type="button" class="btn btn-ghost enlarge-montage">Agrandir le tableau</button></div></section><div class="bank" id="bankQuestion2" data-zone="bank2" tabindex="0" data-label="Étiquettes à placer" aria-label="Étiquettes à placer"></div><div class="description-list"><div class="description-card"><strong>Pour l’expérience test :</strong><div class="drop-zone inline-drop wide-drop" data-zone="test" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></div><div class="description-card"><strong>Pour l’expérience témoin :</strong><div class="drop-zone inline-drop wide-drop" data-zone="temoin" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></div></div><div class="feedback" id="feedback2" role="status"></div><div class="actions"><button class="btn btn-secondary" data-back="1">Retour</button><button class="btn btn-secondary" data-hint="2">Indice</button><button class="btn btn-secondary" data-reset="2">Recommencer</button><button class="btn btn-primary" id="check2">Vérifier</button><button class="btn btn-primary hidden" id="next2">Question suivante</button></div></section><section class="step-panel " id="question3" aria-labelledby="q3Title"><div class="section-heading"><div class="step-number">3</div><div><h3 id="q3Title">Compare les résultats attendus et obtenus</h3><p>Complète le tableau de comparaison. Associe chaque réponse à la bonne expérience et au bon type de résultat.</p></div></div><section class="reference-section"><button class="reference-toggle" type="button" data-toggle="support3" aria-expanded="true"><span><strong>Document · Résultats expérimentaux</strong> — afficher / masquer</span><span class="reference-chevron">⌃</span></button><div class="reference-fold" id="support3"><p><strong>Hypothèse d’Ilham :</strong> « Si je place un escargot dans une boîte, alors la quantité de dioxygène diminue et la quantité de dioxyde de carbone augmente dans l’air de la boîte. »</p><div class="plant-document"><img data-montage alt="Tableau : dioxygène test 21 % puis 19 %, témoin 21 % puis 21 %. Eau de chaux test limpide puis trouble, témoin limpide au début et à la fin."></div><button type="button" class="btn btn-ghost enlarge-montage">Agrandir le tableau</button></div></section><div class="bank" id="bankQuestion3" data-zone="bank3" tabindex="0" data-label="Étiquettes à placer" aria-label="Étiquettes à placer"></div><div class="comparison-wrap"><table class="comparison-table"><thead><tr><th scope="col">Comparaison</th><th scope="col">Expérience test</th><th scope="col">Expérience témoin</th></tr></thead><tbody><tr><th scope="row">Résultat attendu</th><td><div class="drop-zone inline-drop wide-drop" data-zone="at" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></td><td><div class="drop-zone inline-drop wide-drop" data-zone="ac" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></td></tr><tr><th scope="row">Résultat obtenu</th><td><div class="drop-zone inline-drop wide-drop" data-zone="ot" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></td><td><div class="drop-zone inline-drop wide-drop" data-zone="oc" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></td></tr></tbody></table></div><div class="feedback" id="feedback3" role="status"></div><div class="actions"><button class="btn btn-secondary" data-back="2">Retour</button><button class="btn btn-secondary" data-hint="3">Indice</button><button class="btn btn-secondary" data-reset="3">Recommencer</button><button class="btn btn-primary" id="check3">Vérifier</button><button class="btn btn-primary hidden" id="next3">Question suivante</button></div></section><section class="step-panel " id="question4" aria-labelledby="q4Title"><div class="section-heading"><div class="step-number">4</div><div><h3 id="q4Title">Vérifie l’hypothèse</h3><p>Choisis la phrase qui relie les résultats obtenus aux résultats attendus.</p></div></div><section class="reference-section"><button class="reference-toggle" type="button" data-toggle="support4" aria-expanded="true"><span><strong>Document · Résultats expérimentaux</strong> — afficher / masquer</span><span class="reference-chevron">⌃</span></button><div class="reference-fold" id="support4"><p><strong>Hypothèse d’Ilham :</strong> « Si je place un escargot dans une boîte, alors la quantité de dioxygène diminue et la quantité de dioxyde de carbone augmente dans l’air de la boîte. »</p><div class="plant-document"><img data-montage alt="Tableau : dioxygène test 21 % puis 19 %, témoin 21 % puis 21 %. Eau de chaux test limpide puis trouble, témoin limpide au début et à la fin."></div><button type="button" class="btn btn-ghost enlarge-montage">Agrandir le tableau</button></div></section><div class="bank" id="bankQuestion4" data-zone="bank4" tabindex="0" data-label="Étiquettes à placer" aria-label="Étiquettes à placer"></div><div class="description-list"><div class="description-card"><strong>L’hypothèse est-elle vérifiée ?</strong><div class="drop-zone inline-drop wide-drop" data-zone="hyp" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></div></div><div class="feedback" id="feedback4" role="status"></div><div class="actions"><button class="btn btn-secondary" data-back="3">Retour</button><button class="btn btn-secondary" data-hint="4">Indice</button><button class="btn btn-secondary" data-reset="4">Recommencer</button><button class="btn btn-primary" id="check4">Vérifier</button><button class="btn btn-primary hidden" id="next4">Question suivante</button></div></section><section class="step-panel " id="question5" aria-labelledby="q5Title"><div class="section-heading"><div class="step-number">5</div><div><h3 id="q5Title">Formule la conclusion</h3><p>Choisis les deux échanges gazeux mis en évidence. Leur ordre n’a pas d’importance.</p></div></div><section class="reference-section"><button class="reference-toggle" type="button" data-toggle="support5" aria-expanded="true"><span><strong>Document · Résultats expérimentaux</strong> — afficher / masquer</span><span class="reference-chevron">⌃</span></button><div class="reference-fold" id="support5"><p><strong>Hypothèse d’Ilham :</strong> « Si je place un escargot dans une boîte, alors la quantité de dioxygène diminue et la quantité de dioxyde de carbone augmente dans l’air de la boîte. »</p><div class="plant-document"><img data-montage alt="Tableau : dioxygène test 21 % puis 19 %, témoin 21 % puis 21 %. Eau de chaux test limpide puis trouble, témoin limpide au début et à la fin."></div><button type="button" class="btn btn-ghost enlarge-montage">Agrandir le tableau</button></div></section><div class="bank" id="bankQuestion5" data-zone="bank5" tabindex="0" data-label="Étiquettes à placer" aria-label="Étiquettes à placer"></div><div class="description-list"><div class="description-card"><strong>Je conclus que…</strong><div class="drop-zone inline-drop wide-drop" data-zone="con1" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></div><div class="description-card"><strong>… et que…</strong><div class="drop-zone inline-drop wide-drop" data-zone="con2" data-placeholder="…" tabindex="0" aria-label="Réponse à compléter"></div></div></div><div class="feedback" id="feedback5" role="status"></div><div class="actions"><button class="btn btn-secondary" data-back="4">Retour</button><button class="btn btn-secondary" data-hint="5">Indice</button><button class="btn btn-secondary" data-reset="5">Recommencer</button><button class="btn btn-primary" id="check5">Terminer</button></div></section><section class="step-panel" id="results" aria-labelledby="resultTitle"><div class="result-card"><div class="result-icon">🏆</div><h3 id="resultTitle">Activité terminée !</h3><div class="score" id="scoreDisplay">0/11</div><p id="resultMessage"></p><div class="recap"><strong>À retenir</strong><p>Dans l’expérience test, le dioxygène passe de <b>21 % à 19 %</b> et l’eau de chaux devient trouble. Dans le témoin, le dioxygène reste à <b>21 %</b> et l’eau de chaux reste limpide.</p><p>Les résultats obtenus correspondent aux résultats attendus : l’hypothèse est vérifiée. L’escargot <b>consomme du dioxygène</b> et <b>rejette du dioxyde de carbone</b>.</p></div><div class="actions result-actions"><button class="btn btn-secondary" id="backHome">Retour à l’accueil</button><button class="btn btn-primary" id="restartAll">Recommencer toute l’activité</button></div></div></section></div></main></div><dialog class="key-dialog" id="keyDialog" aria-labelledby="keyDialogTitle"><div class="key-dialog-head"><strong id="keyDialogTitle">Résultats expérimentaux</strong><button type="button" class="btn btn-secondary" id="closeKeyDialog">Fermer</button></div><div class="original-key"><img alt="Tableau des résultats expérimentaux agrandi"></div></dialog><script>
+const montageImage = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMTIwIiBoZWlnaHQ9IjQzNCIgdmlld0JveD0iMCAwIDExMjAgNDM0Ij48dGl0bGU+UsOpc3VsdGF0cyBleHDDqXJpbWVudGF1eCBvYnRlbnVzIHBhciBJbGhhbTwvdGl0bGU+PGRlc2M+RGlveHlnw6huZSA6IHRlc3QgMjEgJSBwdWlzIDE5ICUsIHTDqW1vaW4gMjEgJSBwdWlzIDIxICUuIEVhdSBkZSBjaGF1eCA6IHRlc3QgbGltcGlkZSBwdWlzIHRyb3VibGUsIHTDqW1vaW4gbGltcGlkZSBwdWlzIGxpbXBpZGUuPC9kZXNjPjxzdHlsZT50ZXh0e2ZvbnQtZmFtaWx5OkFyaWFsLERlamFWdSBTYW5zLHNhbnMtc2VyaWY7ZmlsbDojMTgzZDM1O2ZvbnQtc2l6ZToyMXB4fS5sYWJlbHtmb250LXdlaWdodDo3MDA7Zm9udC1zaXplOjIycHh9LnZhbHVle2ZvbnQtc2l6ZToyNnB4O2ZvbnQtd2VpZ2h0OjcwMH0uaGVhZHtmaWxsOndoaXRlO2ZvbnQtd2VpZ2h0OjcwMDtmb250LXNpemU6MjJweH08L3N0eWxlPjxyZWN0IHdpZHRoPSIxMTIwIiBoZWlnaHQ9IjQzNCIgcng9IjE2IiBmaWxsPSIjZmZmIi8+PHJlY3QgeD0iMTYiIHk9IjE2IiB3aWR0aD0iMTA4OCIgaGVpZ2h0PSI0MDIiIHJ4PSIxMiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjN2VhZmExIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTYgODJIMTEwNE0xNiAxNjZIMTEwNE0xNiAyNTBIMTEwNE0xNiAzMzRIMTEwNE0yODYgMTZWNDE4TTU1NiAxNlY0MThNODMwIDE2VjQxOCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN2VhZmExIiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNMTYgMTZIMTEwNFY4MkgxNloiIGZpbGw9IiMwODZmNTUiLz48cmVjdCB4PSIxNyIgeT0iODMiIHdpZHRoPSIyNjgiIGhlaWdodD0iMTY2IiBmaWxsPSIjZDlmM2U4Ii8+PHJlY3QgeD0iMTciIHk9IjI1MSIgd2lkdGg9IjI2OCIgaGVpZ2h0PSIxNjYiIGZpbGw9IiNkOWYzZTgiLz48cmVjdCB4PSIyODciIHk9IjgzIiB3aWR0aD0iMjY4IiBoZWlnaHQ9IjMzNCIgZmlsbD0iI2YyZmFmNiIvPjxwYXRoIGQ9Ik0xNyAxNjZIMjg1TTE3IDMzNEgyODUiIHN0cm9rZT0iI2Q5ZjNlOCIgc3Ryb2tlLXdpZHRoPSIzIi8+Cjx0ZXh0IHg9IjE1MSIgeT0iNTciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJoZWFkIj5NZXN1cmU8L3RleHQ+PHRleHQgeD0iNDIxIiB5PSI1NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImhlYWQiPkV4cMOpcmllbmNlPC90ZXh0Pjx0ZXh0IHg9IjY5MyIgeT0iNDIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJoZWFkIj5Ew6lidXQgZGU8L3RleHQ+PHRleHQgeD0iNjkzIiB5PSI2OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImhlYWQiPmzigJlleHDDqXJpZW5jZTwvdGV4dD48dGV4dCB4PSI5NjciIHk9IjQyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0iaGVhZCI+RmluIGRlPC90ZXh0Pjx0ZXh0IHg9Ijk2NyIgeT0iNjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJoZWFkIj5s4oCZZXhww6lyaWVuY2U8L3RleHQ+Cjx0ZXh0IHg9IjE1MSIgeT0iMTU2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0ibGFiZWwiPlF1YW50aXTDqSBkZTwvdGV4dD48dGV4dCB4PSIxNTEiIHk9IjE4NyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImxhYmVsIj5kaW94eWfDqG5lICglKTwvdGV4dD4KPHRleHQgeD0iMTUxIiB5PSIzMjQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+QXNwZWN0IGRlIGzigJllYXU8L3RleHQ+PHRleHQgeD0iMTUxIiB5PSIzNTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJsYWJlbCI+ZGUgY2hhdXg8L3RleHQ+PHRleHQgeD0iNDIxIiB5PSIxMzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkV4cMOpcmllbmNlIHRlc3Q8L3RleHQ+PHRleHQgeD0iNjkzIiB5PSIxMzQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+MjEgJTwvdGV4dD48dGV4dCB4PSI5NjciIHk9IjEzNCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj4xOSAlPC90ZXh0Pjx0ZXh0IHg9IjQyMSIgeT0iMjE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5FeHDDqXJpZW5jZSB0w6ltb2luPC90ZXh0Pjx0ZXh0IHg9IjY5MyIgeT0iMjE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPjIxICU8L3RleHQ+PHRleHQgeD0iOTY3IiB5PSIyMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+MjEgJTwvdGV4dD48dGV4dCB4PSI0MjEiIHk9IjMwMiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXhww6lyaWVuY2UgdGVzdDwvdGV4dD48dGV4dCB4PSI2OTMiIHk9IjMwMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5MaW1waWRlPC90ZXh0Pjx0ZXh0IHg9Ijk2NyIgeT0iMzAyIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsdWUiPlRyb3VibGU8L3RleHQ+PHRleHQgeD0iNDIxIiB5PSIzODYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkV4cMOpcmllbmNlIHTDqW1vaW48L3RleHQ+PHRleHQgeD0iNjkzIiB5PSIzODYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWx1ZSI+TGltcGlkZTwvdGV4dD48dGV4dCB4PSI5NjciIHk9IjM4NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbHVlIj5MaW1waWRlPC90ZXh0PjxwYXRoIGQ9Ik0yODYgMTY2SDExMDQgTTI4NiAyNTBIMTEwNCBNMjg2IDMzNEgxMTA0IiBzdHJva2U9IiM3ZWFmYTEiIHN0cm9rZS13aWR0aD0iMiIvPjwvc3ZnPg==";
+
+
+
+
+const configs = {"q1": {"bank": "bankQuestion1", "group": "q1", "source": [{"id": "a1", "text": "La quantité de dioxygène diminue.", "answerPart": "att1"}, {"id": "a2", "text": "La quantité de dioxyde de carbone augmente.", "answerPart": "att2"}, {"id": "d1", "text": "La quantité de dioxygène augmente.", "answerPart": "intrus"}, {"id": "d2", "text": "La quantité de dioxyde de carbone diminue.", "answerPart": "intrus"}], "answers": {"att1": "att1|att2", "att2": "att1|att2"}, "expected": 2, "next": "next1"}, "q2": {"bank": "bankQuestion2", "group": "q2", "source": [{"id": "a1", "text": "Le dioxygène passe de 21 % à 19 % et l’eau de chaux devient trouble.", "answerPart": "test"}, {"id": "a2", "text": "Le dioxygène reste à 21 % et l’eau de chaux reste limpide.", "answerPart": "temoin"}, {"id": "d1", "text": "Le dioxygène reste à 21 % et l’eau de chaux devient trouble.", "answerPart": "intrus"}, {"id": "d2", "text": "Le dioxygène passe de 19 % à 21 %.", "answerPart": "intrus"}], "answers": {"test": "test", "temoin": "temoin"}, "expected": 2, "next": "next2"}, "q3": {"bank": "bankQuestion3", "group": "q3", "source": [{"id": "a1", "text": "Le dioxygène diminue et l’eau de chaux se trouble.", "answerPart": "at"}, {"id": "a2", "text": "Le dioxygène ne varie pas et l’eau de chaux reste limpide.", "answerPart": "ac"}, {"id": "a3", "text": "Le dioxygène passe de 21 % à 19 % et l’eau de chaux devient trouble.", "answerPart": "ot"}, {"id": "a4", "text": "Le dioxygène reste à 21 % et l’eau de chaux reste limpide.", "answerPart": "oc"}, {"id": "d1", "text": "Le dioxygène augmente et l’eau de chaux reste limpide.", "answerPart": "intrus"}, {"id": "d2", "text": "Le dioxygène diminue dans le témoin.", "answerPart": "intrus"}], "answers": {"at": "at", "ac": "ac", "ot": "ot", "oc": "oc"}, "expected": 4, "next": "next3"}, "q4": {"bank": "bankQuestion4", "group": "q4", "source": [{"id": "a1", "text": "Les résultats obtenus correspondent aux résultats attendus : l’hypothèse est vérifiée.", "answerPart": "hyp"}, {"id": "d1", "text": "Les résultats obtenus contredisent l’hypothèse.", "answerPart": "intrus"}, {"id": "d2", "text": "L’hypothèse est vérifiée uniquement parce que le témoin existe.", "answerPart": "intrus"}], "answers": {"hyp": "hyp"}, "expected": 1, "next": "next4"}, "q5": {"bank": "bankQuestion5", "group": "q5", "source": [{"id": "a1", "text": "L’escargot consomme du dioxygène.", "answerPart": "con1"}, {"id": "a2", "text": "L’escargot rejette du dioxyde de carbone.", "answerPart": "con2"}, {"id": "d1", "text": "L’escargot produit du dioxygène.", "answerPart": "intrus"}, {"id": "d2", "text": "L’escargot consomme du dioxyde de carbone.", "answerPart": "intrus"}], "answers": {"con1": "con1|con2", "con2": "con1|con2"}, "expected": 2, "next": null}};
+    let selectedCard = null;
+    let draggedCard = null;
+    let touchClone = null;
+    let touchMoved = false;
+    let scores = { q1: 0, q2: 0, q3: 0, q4: 0, q5: 0 };
+
+    function shuffle(items) {
+      const mixed = [...items];
+      for (let i = mixed.length - 1; i > 0; i--) {
+        const values = new Uint32Array(1);
+        crypto.getRandomValues(values);
+        const j = values[0] % (i + 1);
+        [mixed[i], mixed[j]] = [mixed[j], mixed[i]];
+      }
+      return mixed;
+    }
+
+    function makeItems(question) {
+      const config = configs['q' + question];
+      return config.source.map(item => ({
+        id: `${config.group}-${item.id}`,
+        text: item.text,
+        answer: config.answers[item.answerPart] || 'intrus'
+      }));
+    }
+
+    function createCard(item, group) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.textContent = item.text;
+      card.draggable = true;
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.dataset.id = item.id;
+      card.dataset.answer = item.answer;
+      card.dataset.group = group;
+      card.setAttribute('aria-label', item.text + ', étiquette à déplacer');
+      card.addEventListener('click', event => {
+        event.stopPropagation();
+        if (card.classList.contains('locked') || touchMoved) return;
+        selectCard(card);
+      });
+      card.addEventListener('keydown', event => {
+        if ((event.key === 'Enter' || event.key === ' ') && !card.classList.contains('locked')) {
+          event.preventDefault(); selectCard(card);
+        }
+      });
+      card.addEventListener('dragstart', event => {
+        if (card.classList.contains('locked')) { event.preventDefault(); return; }
+        draggedCard = card;
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', card.dataset.id);
+        requestAnimationFrame(() => card.style.opacity = '.42');
+      });
+      card.addEventListener('dragend', () => {
+        card.style.opacity = ''; draggedCard = null; clearDragStyles();
+      });
+      card.addEventListener('touchstart', startTouchDrag, { passive: false });
+      card.addEventListener('touchmove', moveTouchDrag, { passive: false });
+      card.addEventListener('touchend', endTouchDrag, { passive: false });
+      return card;
+    }
+
+    function selectCard(card) {
+      if (selectedCard === card) {
+        card.classList.remove('selected'); selectedCard = null; return;
+      }
+      document.querySelectorAll('.card.selected').forEach(element => element.classList.remove('selected'));
+      selectedCard = card; card.classList.add('selected');
+    }
+
+    function startTouchDrag(event) {
+      if (this.classList.contains('locked')) return;
+      touchMoved = false; draggedCard = this;
+      const touch = event.touches[0];
+      touchClone = this.cloneNode(true);
+      touchClone.classList.add('drag-clone');
+      touchClone.style.width = Math.min(this.getBoundingClientRect().width, window.innerWidth * .78) + 'px';
+      document.body.appendChild(touchClone); positionTouchClone(touch);
+    }
+
+    function moveTouchDrag(event) {
+      if (!touchClone || !draggedCard) return;
+      event.preventDefault(); touchMoved = true;
+      const touch = event.touches[0]; positionTouchClone(touch); clearDragStyles();
+      touchClone.style.display = 'none';
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      touchClone.style.display = '';
+      const zone = target && target.closest('[data-zone]');
+      if (isCompatibleZone(zone, draggedCard)) zone.classList.add('drag-over');
+      if (touch.clientY < 70) window.scrollBy(0, -12);
+      else if (touch.clientY > window.innerHeight - 70) window.scrollBy(0, 12);
+    }
+
+    function endTouchDrag(event) {
+      if (!touchClone || !draggedCard) return;
+      event.preventDefault();
+      const activeCard = draggedCard;
+      const touch = event.changedTouches[0];
+      touchClone.remove(); touchClone = null; clearDragStyles();
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      const zone = target && target.closest('[data-zone]');
+      if (touchMoved && isCompatibleZone(zone, activeCard)) moveCardToZone(activeCard, zone);
+      else if (!touchMoved) selectCard(activeCard);
+      draggedCard = null;
+      setTimeout(() => { touchMoved = false; }, 350);
+    }
+
+    function positionTouchClone(touch) {
+      touchClone.style.left = (touch.clientX - touchClone.offsetWidth / 2) + 'px';
+      touchClone.style.top = (touch.clientY - touchClone.offsetHeight - 16) + 'px';
+    }
+
+    function questionFromGroup(group) { return Number(group.replace('q', '')); }
+    function isCompatibleZone(zone, card) {
+      if (!zone || !card) return false;
+      const question = questionFromGroup(card.dataset.group);
+      if (zone.dataset.zone === 'bank' + question) return true;
+      return zone.classList.contains('drop-zone') && zone.closest('#question' + question);
+    }
+
+    function activateZones() {
+      document.querySelectorAll('[data-zone]').forEach(zone => {
+        zone.addEventListener('dragover', event => {
+          if (!isCompatibleZone(zone, draggedCard)) return;
+          event.preventDefault(); event.dataTransfer.dropEffect = 'move'; zone.classList.add('drag-over');
+        });
+        zone.addEventListener('dragleave', event => {
+          if (!zone.contains(event.relatedTarget)) zone.classList.remove('drag-over');
+        });
+        zone.addEventListener('drop', event => {
+          event.preventDefault(); zone.classList.remove('drag-over');
+          if (isCompatibleZone(zone, draggedCard)) moveCardToZone(draggedCard, zone);
+        });
+        zone.addEventListener('click', event => {
+          if (event.target.closest('.card') || !selectedCard || !isCompatibleZone(zone, selectedCard)) return;
+          moveCardToZone(selectedCard, zone);
+        });
+        zone.addEventListener('keydown', event => {
+          if ((event.key === 'Enter' || event.key === ' ') && selectedCard && isCompatibleZone(zone, selectedCard)) {
+            event.preventDefault(); moveCardToZone(selectedCard, zone);
+          }
+        });
+      });
+    }
+
+    function moveCardToZone(card, zone) {
+      if (!card || card.classList.contains('locked')) return;
+      card.classList.remove('selected', 'correct', 'wrong'); selectedCard = null;
+      const question = questionFromGroup(card.dataset.group);
+      if (zone.classList.contains('drop-zone')) {
+        const existing = zone.querySelector('.card');
+        if (existing && existing !== card) document.getElementById(configs['q' + question].bank).appendChild(existing);
+        zone.appendChild(card);
+      } else zone.appendChild(card);
+      hideFeedback(question);
+    }
+
+    function clearDragStyles() {
+      document.querySelectorAll('.drag-over').forEach(zone => zone.classList.remove('drag-over'));
+    }
+
+    function renderQuestion(question) {
+      const config = configs['q' + question];
+      document.querySelectorAll(`#question${question} .drop-zone`).forEach(zone => zone.innerHTML = '');
+      const bank = document.getElementById(config.bank);
+      bank.innerHTML = '';
+      shuffle(makeItems(question)).forEach(item => bank.appendChild(createCard(item, config.group)));
+      document.getElementById('check' + question).classList.remove('hidden');
+      if (config.next) document.getElementById(config.next).classList.add('hidden');
+      scores['q' + question] = 0;
+      hideFeedback(question);
+    }
+
+    function checkQuestion(question) {
+      const config = configs['q' + question];
+      const zones = [...document.querySelectorAll(`#question${question} .drop-zone`)];
+      if (zones.some(zone => !zone.querySelector('.card'))) {
+        showFeedback(question, 'warning', config.expected === 1 ? 'Complète la réponse avant de vérifier.' : `Complète les ${config.expected} emplacements avant de vérifier.`);
+        return;
+      }
+      const cards = zones.map(zone => zone.querySelector('.card'));
+      let correct = 0;
+      cards.forEach(card => {
+        const actual = card.closest('[data-zone]').dataset.zone;
+        const ok = card.dataset.answer.split('|').includes(actual);
+        card.classList.toggle('correct', ok);
+        card.classList.toggle('wrong', !ok);
+        if (ok) correct++;
+      });
+      scores['q' + question] = correct;
+      if (correct !== config.expected) {
+        showFeedback(question, 'error', 'Relis le tableau et distingue les résultats attendus, les observations et la conclusion.');
+        return;
+      }
+      cards.forEach(card => card.classList.add('locked'));
+      const successMessages = {"1": "Exact ! L’hypothèse prévoit une diminution du dioxygène et une augmentation du dioxyde de carbone.", "2": "Dans le test, le dioxygène diminue et l’eau de chaux se trouble. Dans le témoin, les deux observations restent inchangées.", "3": "Les résultats obtenus sont conformes aux résultats attendus, pour le test comme pour le témoin.", "4": "L’hypothèse est vérifiée par la concordance entre les résultats attendus et les résultats obtenus.", "5": "La conclusion relie les deux observations : l’escargot consomme du dioxygène et rejette du dioxyde de carbone."};
+      showFeedback(question, 'success', successMessages[question]);
+      if (config.next) {
+        document.getElementById('check' + question).classList.add('hidden');
+        document.getElementById(config.next).classList.remove('hidden');
+      } else setTimeout(showResults, 650);
+    }
+
+    function showFeedback(question, type, message) {
+      const box = document.getElementById('feedback' + question);
+      box.className = 'feedback show ' + type; box.textContent = message;
+      box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    function hideFeedback(question) {
+      const box = document.getElementById('feedback' + question);
+      if (box) box.className = 'feedback';
+    }
+    function showPanel(id, label) {
+      document.querySelectorAll('.step-panel').forEach(panel => panel.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.getElementById('progressPill').textContent = label;
+      document.querySelector('main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    function startActivity() {
+      document.getElementById('homePage').classList.add('hidden');
+      document.getElementById('activityArea').classList.remove('hidden');
+      showPanel('question1', 'Question 1 sur 5');
+    }
+    function showHome() {
+      document.getElementById('activityArea').classList.add('hidden');
+      document.getElementById('homePage').classList.remove('hidden');
+      document.getElementById('progressPill').textContent = 'Accueil';
+    }
+    function showResults() {
+      const total = 11;
+      const points = Object.values(scores).reduce((sum, score) => sum + score, 0);
+      document.getElementById('scoreDisplay').textContent = `${points}/${total}`;
+      document.getElementById('resultMessage').textContent = points === total
+        ? 'Tu sais tirer une conclusion à partir de résultats expérimentaux.'
+        : 'Recommence pour consolider les éléments qui t’ont posé problème.';
+      showPanel('results', 'Activité terminée');
+    }
+    function showHint(question) {
+      const messages = {"1": "Relis l’hypothèse : quels changements sont annoncés pour les deux gaz ?", "2": "Compare le début et la fin pour chaque expérience : pourcentage de dioxygène et aspect de l’eau de chaux.", "3": "Attendu : ce que l’on prévoit. Obtenu : ce que montre le tableau. Respecte aussi la colonne test ou témoin.", "4": "Demande-toi si les observations correspondent aux prévisions de l’hypothèse.", "5": "La diminution du dioxygène indique une consommation. Le trouble de l’eau de chaux met en évidence le dioxyde de carbone."};
+      showFeedback(question, 'warning', messages[question]);
+    }
+    function toggleReference(button) {
+      const fold = document.getElementById(button.dataset.toggle);
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!expanded));
+      fold.classList.toggle('collapsed', expanded);
+    }
+
+    document.querySelectorAll('.reference-toggle').forEach(button => button.addEventListener('click', () => toggleReference(button)));
+    document.getElementById('startActivity').addEventListener('click', startActivity);
+    [1, 2, 3, 4, 5].forEach(question => {
+      document.getElementById('check' + question).addEventListener('click', () => checkQuestion(question));
+    });
+    document.getElementById('next1').addEventListener('click', () => showPanel('question2', 'Question 2 sur 5'));
+    document.getElementById('next2').addEventListener('click', () => showPanel('question3', 'Question 3 sur 5'));
+    document.getElementById('next3').addEventListener('click', () => showPanel('question4', 'Question 4 sur 5'));
+    document.querySelector('[data-back="1"]').addEventListener('click', () => showPanel('question1', 'Question 1 sur 5'));
+    document.querySelector('[data-back="2"]').addEventListener('click', () => showPanel('question2', 'Question 2 sur 5'));
+    document.querySelector('[data-back="3"]').addEventListener('click', () => showPanel('question3', 'Question 3 sur 5'));
+    document.querySelectorAll('[data-hint]').forEach(button => button.addEventListener('click', () => showHint(Number(button.dataset.hint))));
+    document.querySelectorAll('[data-reset]').forEach(button => button.addEventListener('click', () => renderQuestion(Number(button.dataset.reset))));
+    document.getElementById('next4').addEventListener('click', () => showPanel('question5', 'Question 5 sur 5'));
+    document.querySelector('[data-back="4"]').addEventListener('click', () => showPanel('question4', 'Question 4 sur 5'));
+    document.getElementById('backHome').addEventListener('click', showHome);
+    document.getElementById('restartAll').addEventListener('click', () => {
+      scores = { q1: 0, q2: 0, q3: 0, q4: 0, q5: 0 };
+      [1, 2, 3, 4, 5].forEach(renderQuestion);
+      showPanel('question1', 'Question 1 sur 5');
+    });
+
+    document.querySelectorAll('[data-montage]').forEach(img => img.src = montageImage);
+    document.querySelectorAll('.enlarge-montage').forEach(button => button.addEventListener('click', () => {
+      const dialog = document.getElementById('keyDialog');
+      dialog.querySelector('img').src = montageImage;
+      dialog.showModal();
+    }));
+    document.getElementById('closeKeyDialog').addEventListener('click', () => document.getElementById('keyDialog').close());
+    activateZones();
+    [1, 2, 3, 4, 5].forEach(renderQuestion);
+  </script></body></html>
