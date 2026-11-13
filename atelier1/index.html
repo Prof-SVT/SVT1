@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f6ef">
+<meta name="description" content="Six missions interactives de SVT en 1AC.">
+<title>Atelier SVT — À toi d’enquêter</title>
+<link rel="icon" href="assets/embleme.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script defer src="assets/site.js"></script>
+</head>
+<body class="home">
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="header"><div class="frame header-inner">
+  <a class="brand" href="index.html"><img src="assets/embleme.png" width="38" height="38" alt=""><span>Atelier<span class="brand-accent">SVT</span></span></a>
+  <nav aria-label="Navigation principale"><a href="index.html#missions">Les missions</a><a href="index.html#plus-loin">Pour aller plus loin</a><span class="level">1AC</span></nav>
+</div></header>
+<main id="contenu">
+  <section class="frame hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="kicker"><i></i> SCIENCES DE LA VIE ET DE LA TERRE</p>
+      <h1 id="hero-title">Explore<br><em>le vivant.</em></h1>
+      <p>Observe, compte et classe. Six missions pour explorer le vivant.</p>
+      <a class="primary" href="ecosystemes.html">Lancer la première mission <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="hero-scene">
+      <picture class="hero-media"><img src="assets/expedition.webp" alt="Une libellule sur un brin d’herbe, au-dessus d’une mare." width="1672" height="941" fetchpriority="high"></picture>
+      <a class="hero-scroll" href="#missions" aria-label="Voir les six missions"><span>Les 6 missions</span><span aria-hidden="true">↓</span></a>
+    </div>
+  </section>
+  <section class="frame missions" id="missions" aria-labelledby="missions-title">
+    <div class="section-head"><div><p class="kicker">À TOI DE JOUER</p><h2 id="missions-title">Les missions</h2></div><div class="progress" hidden data-progress><span data-progress-label></span><progress max="6" value="0" aria-label="Missions terminées"></progress></div></div>
+    <div class="mission-grid"><a class="mission-card" data-mission="1" href="ecosystemes.html">
+  <div class="mission-image"><img src="assets/foret.webp" alt="" width="512" height="512" loading="lazy"><span class="card-index">01</span></div>
+  <div class="mission-copy"><div><p class="kicker">ÉCOSYSTÈMES</p><h3>La forêt à la loupe</h3><p>Repère le vivant et son milieu.</p></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+</a><a class="mission-card" data-mission="2" href="groupe-animal.html">
+  <div class="mission-image"><img src="assets/gendarme.webp" alt="" width="512" height="512" loading="lazy"><span class="card-index">02</span></div>
+  <div class="mission-copy"><div><p class="kicker">CLASSIFICATION</p><h3>À qui sont ces pattes ?</h3><p>Identifie les animaux à leurs indices.</p></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+</a><a class="mission-card" data-mission="3" href="groupe-vegetal.html">
+  <div class="mission-image"><img src="assets/fougere.webp" alt="" width="512" height="512" loading="lazy"><span class="card-index">03</span></div>
+  <div class="mission-copy"><div><p class="kicker">CLASSIFICATION</p><h3>Le code des plantes</h3><p>Suis les indices, des feuilles aux fruits.</p></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+</a><a class="mission-card" data-mission="4" href="respiration-souris.html">
+  <div class="mission-image"><img src="assets/souris.webp" alt="" width="512" height="512" loading="lazy"><span class="card-index">04</span></div>
+  <div class="mission-copy"><div><p class="kicker">RESPIRATION</p><h3>Le test de la souris</h3><p>Prépare une expérience avec un témoin.</p></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+</a><a class="mission-card" data-mission="5" href="respiration-criquet.html">
+  <div class="mission-image"><img src="assets/criquet.webp" alt="" width="512" height="512" loading="lazy"><span class="card-index">05</span></div>
+  <div class="mission-copy"><div><p class="kicker">RESPIRATION</p><h3>Le mystère du criquet</h3><p>Fais avancer le temps et compare les deux boîtes.</p></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+</a><a class="mission-card" data-mission="6" href="conclure-respiration.html">
+  <div class="mission-image"><img src="assets/poisson.webp" alt="" width="512" height="512" loading="lazy"><span class="card-index">06</span></div>
+  <div class="mission-copy"><div><p class="kicker">RESPIRATION</p><h3>L’enquête sous l’eau</h3><p>Cherche la trace de la respiration du poisson.</p></div><span class="card-arrow" aria-hidden="true">↗</span></div>
+</a></div>
+  </section>
+  <section class="frame more" id="plus-loin" aria-labelledby="more-title">
+    <div class="more-inner"><h2 id="more-title">Pour aller plu loin !</h2><div class="resource-links"><a class="secondary" href="https://prof-svt.github.io/SVT1/Act/5.html" target="_blank" rel="noopener">Diversité des écosystèmes <span aria-hidden="true">↗</span></a><a class="secondary" href="https://prof-svt.github.io/SVT1/Act/6.html" target="_blank" rel="noopener">Classer l’escargot <span aria-hidden="true">↗</span></a><a class="secondary" href="https://prof-svt.github.io/SVT1/Act/7.html" target="_blank" rel="noopener">Classer le caroubier <span aria-hidden="true">↗</span></a><a class="secondary" href="https://prof-svt.github.io/SVT1/Act/9.html" target="_blank" rel="noopener">Respiration de l’escargot <span aria-hidden="true">↗</span></a><a class="secondary" href="https://prof-svt.github.io/SVT1/Act/10.html" target="_blank" rel="noopener">Conclure à partir de résultats <span aria-hidden="true">↗</span></a></div></div>
+  </section>
+</main><footer><div class="frame footer-inner"><strong>Atelier<span class="brand-accent">SVT</span></strong><span>Salah El Omrani · Professeur de SVT</span><a href="index.html#missions">Toutes les missions ↗</a></div></footer>
+</body>
+</html>
